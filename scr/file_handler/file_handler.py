@@ -3,6 +3,7 @@ import os
 import pandas as pd
 from lxml import etree
 
+# class to handle the config xml file
 class Config_File_Handler():
     def __init__(self, config_file):
         self.config_file = config_file
@@ -115,8 +116,9 @@ class Config_File_Handler():
             categories.append(category)
         return categories
 
+# class to handle data files, e.g. csv, used for processing the ieee downloaded files
 class File_Handler:
-    def __init__(self, file_path):
+    def __init__(self, file_path, sep = ','):
         """
         Initialize the FileHandler for a filepath.
 
@@ -126,6 +128,8 @@ class File_Handler:
         self.file_path = file_path
         self.data = None
         self.processed_data = None
+        self.sep = sep
+        self.load_file()
 
     def parse_data(self, data_str):
         """convert comma-separated string to list of floats"""
@@ -136,7 +140,10 @@ class File_Handler:
     def load_file(self):
         """Identify file format and call respective loader method"""
         if str(self.file_path).endswith('.csv'):
-            self.data = self._load_csv()
+            if self.sep == ',':
+                self.data = self._load_csv_comma()            
+            elif self.sep == ';':
+                self.data = self._load_csv_semic()
         elif str(self.file_path).endswith('.tsv'):
             self.data = self._load_tsv()
         elif str(self.file_path).endswith('.xml'):
@@ -146,9 +153,13 @@ class File_Handler:
         # Add more formats as needed
         #return self.data
 
-    def _load_csv(self):
+    def _load_csv_comma(self):
         """Load CSV file logic"""
         return pd.read_csv(self.file_path, delimiter=',')
+    
+    def _load_csv_semic(self):
+        """Load CSV file logic"""
+        return pd.read_csv(self.file_path, delimiter=';')
     
     def _load_tsv(self):
         """Load TSV file logic"""
@@ -184,7 +195,13 @@ class File_Handler:
 
     
     def get_ieee_articles(self):
-        self.load_file()
+        #self.load_file()
         self.process_ieee_file()
         return self.processed_data
+    
+    def get_processed_data(self):
+        return pd.DataFrame(self.processed_data)
+
+    def get_raw_data(self):
+        return pd.DataFrame(self.data)
 

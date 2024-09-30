@@ -1,6 +1,5 @@
 from pathlib import Path
 from file_handler.file_handler import *
-#from file_handler.file_handler import *
 from scrapers.acm_scraper import *
 from scrapers.pubmed_scraper import *
 from query_writer.query_writer import *
@@ -34,11 +33,14 @@ def main():
     ieee_data_path = parent_path / 'data'
     file_list = [f.name for f in ieee_data_path.iterdir() if '.csv' in f.name]
     
-    ieee_articles = pd.DataFrame()
+    #ieee_articles = pd.DataFrame()
     for file in file_list:
         filepath = os.path.join(ieee_data_path, file)
-        ieee_file_handler = File_Handler(filepath)
-        articles_complete = pd.concat([articles_complete, ieee_file_handler.get_ieee_articles()], axis=0, ignore_index=True)
+        ieee_file_handler = File_Handler(filepath, sep=',')
+        ieee_df = ieee_file_handler.get_ieee_articles()
+        #for column in ieee_df.columns:
+        ieee_df = ieee_df.applymap(lambda x: x.replace('; ', ', ') if isinstance(x, str) else x)
+        articles_complete = pd.concat([articles_complete, ieee_df], axis=0, ignore_index=True)
         #ieee_articles = pd.concat([ieee_articles, ieee_file_handler.get_ieee_articles()], axis=0)
 
     
@@ -55,19 +57,11 @@ def main():
                 acm_query = query_generator.query
     
     pubmed_crawler = Pubmed_Scraper(pubmed_query)
-    articles_complete = pd.concat([articles_complete, pubmed_crawler.scrape_articles(max_results = max_results) ], axis=0, ignore_index=True)
-    #pubmed_articles = pubmed_crawler.scrape_articles(max_results = max_results)   
+    articles_complete = pd.concat([articles_complete, pubmed_crawler.scrape_articles(max_results = max_results) ], axis=0, ignore_index=True) 
     
     acm_crawler = ACM_Scraper(acm_query)
     articles_complete = pd.concat([articles_complete, acm_crawler.scrape_articles(max_results = max_results) ], axis=0, ignore_index=True)
-    
-    #acm_articles = acm_crawler.scrape_articles(max_results = max_results)
-    
-    #if ieee_articles.empty:
-    #    articles_complete = pd.concat([pubmed_articles, acm_articles], axis=0, ignore_index=True)
-    #else:
-    #    articles_complete = pd.concat([pubmed_articles, acm_articles, ieee_articles], axis=0, ignore_index=True)
-    
+        
     # select only articles within the timespan
     if min_year != None or max_year != None :
         if max_year == None:
@@ -77,6 +71,9 @@ def main():
         else:
             articles_complete = articles_complete[((articles_complete['year'] >= min_year) & (articles_complete['year'] <= max_year)) | 
                                                   (articles_complete['year'].isna())]
+    
+    # Reset the index
+    articles_complete.reset_index(drop=True, inplace=True)
     
     # create output folder if it doesn't exist
     output_dir = os.path.join(parent_path, 'output')
@@ -92,15 +89,9 @@ def main():
     file_name = f'{formatted_timestamp}_complete_articles.csv'
     save_path = os.path.join(output_dir, file_name)
     
-    articles_complete.to_csv(save_path, index=True, sep=';', index_label='article id')
+    articles_complete.to_csv(save_path, index=True, sep=';', index_label='article_id')
 
     print(f'Saved articles to {file_name}')
     
 if __name__ == "__main__":
     main()
-
-# TODO
-# load xml config file
-# create queries for all databases
-# load ieee file
-# scrape pubmed & acm

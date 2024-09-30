@@ -32,7 +32,6 @@ class Pubmed_Scraper:
         results_num = int(search_tree.find('.//Count').text)
         max_results = self.max_results if (self.max_results != None) else results_num
         # Get total number of results
-        #total_results = int(search_tree.find('.//Count').text)
         print(f"Pubmed: total results found: {results_num}")
 
         # Initialize variables
@@ -52,7 +51,6 @@ class Pubmed_Scraper:
         print(f"Fetching details for {len(all_id_list)} articles...")
         
         # Split into batches to avoid overloading the request
-        #articles = []
         for start in range(0, len(all_id_list), batch_size):
             batch_ids = all_id_list[start:start + batch_size]
             fetch_params = {
@@ -87,64 +85,6 @@ class Pubmed_Scraper:
                     
                     self.articles.append(item)
                     self.auto_id += 1
-        
-
-
-# this is the old stuff        
-        #if self.max_results == None:
-        #    search_params = {
-        #        'db': 'pubmed',
-        #        'term': self.query,
-        #        'retmode': 'xml'
-        #    }
-        #else:
-        #    search_params = {
-        #        'db': 'pubmed',
-        #        'term': self.query,
-        #        'retmax': self.max_results,
-        #        'retmode': 'xml'
-        #    }
-
-        #search_response = requests.get(self.search_url, params=search_params)
-        #search_tree = ElementTree.fromstring(search_response.content)
-        #results_num = int(search_tree.find('.//Count').text)
-        #
-        #
-        #id_list = [id_elem.text for id_elem in search_tree.findall('.//Id')]
-#
-        #fetch_params = {
-        #    'db': 'pubmed',
-        #    'id': ','.join(id_list),
-        #    'retmode': 'xml'
-        #}
-#
-        #fetch_response = requests.get(self.fetch_url, params=fetch_params)
-        #fetch_tree = ElementTree.fromstring(fetch_response.content)
-
-        
-
-        ##articles = []
-        #for res in fetch_tree.findall('.//PubmedArticle'):
-        #    if self.max_results == None or self.auto_id <= self.max_results:
-        #        logging.info(f'Scraping PubMed: Article Nr. {self.auto_id} of {results_num}')
-        #        date, year = self.extract_date(res)
-        #        #url = self.extract_url(res)
-        #        item = {
-        #        'id': self.auto_id,  # Assign the current ID
-        #        'source': 'PubMed',
-        #        'title': self.extract_title(res),
-        #        'authors': self.extract_authors(res),
-        #        'date' : date,
-        #        'year': year,
-        #        'journal_book': self.extract_journal(res), 
-        #        'doi': self.extract_doi(res),
-        #        'url' : self.extract_url(res),
-        #        'abstract': self.extract_full_abstract(res),
-        #        #'citation': self.extract_citation(res)
-        #        }
-        #        
-        #        self.articles.append(item)
-        #        self.auto_id += 1
 
     def extract_title(self, res):
         return res.find('.//ArticleTitle').text if res.find('.//ArticleTitle') is not None else None
@@ -179,9 +119,6 @@ class Pubmed_Scraper:
         keywords = [f"{res_part.text}" for res_part in res_list[0]] if res_list else None
 
         return ', '.join(keywords) if keywords != None else None
-    
-    #def extract_year(self, date_str):
-    #    return int(re.search(r'\b\d{4}\b', date_str).group())
 
     def extract_journal(self, res):
         journal = res.find('.//Journal/Title').text if res.find('.//Journal/Title') is not None else None
@@ -193,10 +130,6 @@ class Pubmed_Scraper:
     def extract_url(self, res):
         href = res.find('.//ArticleId[@IdType="pubmed"]').text if res.find('.//ArticleId[@IdType="pubmed"]') is not None else None
         return f"https://pubmed.ncbi.nlm.nih.gov/{href}/" 
-
-    #def extract_citation(self, res):
-    #    res_span = res.find('span', class_='citation')
-    #    return int(' '.join(res_span.stripped_strings)) if res_span != None else None
 
     def extract_full_abstract(self, article):
         abstract_list = [
@@ -218,15 +151,14 @@ class Pubmed_Scraper:
         self.parse()
         return pd.DataFrame(self.articles)
 
-def main():
-    query = 'machine learning'
-    
-    pubmed_crawler = Pubmed_Scraper(query = query)
-    #acm_crawler.parse()
-    pubmed_articles = pubmed_crawler.scrape_articles(500)
-    
-    print('')
-    
-# Run the script
-if __name__ == "__main__":
-    main()
+#def main():
+#    query = 'machine learning'
+#    
+#    pubmed_crawler = Pubmed_Scraper(query = query)
+#    pubmed_articles = pubmed_crawler.scrape_articles(500)
+#    
+#    print('')
+#    
+## Run the script
+#if __name__ == "__main__":
+#    main()
