@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchConfig>
+    <Databases>
+        <Database name = "PubMed">
+            <Syntax name = "Title">
+                <Term position = "After">[Title]</Term>
+            </Syntax>        
+            <Syntax name = "Title/Abstract">
+                <Term position = "After">[Title/Abstract]</Term>
+            </Syntax>
+            <Syntax name = "FullText">
+                <Term position = "After">[All Fields]</Term>
+            </Syntax>
+        </Database>
+        <Database name = "IEEE">
+            <Syntax name = "Title">
+                <Term position = "Before">"Document Title":</Term>
+            </Syntax>        
+            <Syntax name = "Title/Abstract">
+                <Term position = "Before">"Document Title":</Term>
+                <Term position = "Before">"Abstract":</Term>
+            </Syntax>
+            <Syntax name = "FullText">
+                <Term position = "Before">"All Metadata":</Term>
+            </Syntax>
+        </Database>
+        <Database name = "ACM" position = "Both">
+            <Syntax name = "Title">
+                <Term position = "Before">Title:( </Term>
+                <Term position = "After">) </Term>
+            </Syntax>        
+            <Syntax name = "Title/Abstract">
+                <Term position = "Before">Title:( </Term>
+                <Term position = "Before">Abstract:(</Term>
+                <Term position = "After">) </Term>
+            </Syntax>
+            <Syntax name = "FullText">
+                <Term position = "Before"> </Term>
+                <Term position = "After"> </Term>
+            </Syntax>
+        </Database>
+    </Databases>
+    
+    <Categories>
+        <Category name="Movement">
+            <SearchTerms>
+                <Term>Movement</Term>
+                <Term>Kinesiology</Term>
+                <Term>Physiotherapy</Term>
+                <Term>"Physical Therapy"</Term>
+                <Term>Kinetic</Term>
+                <Term>Kinematic</Term>
+                <Term>Biomechanic</Term>
+                <Term>"Motor Control"</Term>
+            </SearchTerms>
+        </Category>
+        <Category name="Measurements">
+            <SearchTerms>
+                <Term>"3D Movement Measurement*"</Term>
+                <Term>"3D Motion"</Term>
+                <Term>"Motion capture"</Term>
+                <Term>EMG</Term>
+                <Term>Electromyography</Term>
+                <Term>"Wearable Sensors"</Term>
+                <Term>"Motion analysis"</Term>
+                <Term>"Multimodal"</Term>
+                <Term>IMU</Term>
+            </SearchTerms>
+        </Category>
+        <Category name="Analysis Methods">
+            <SearchTerms>
+                <Term>"Pattern recognition"</Term>
+                <Term>"Dimension reduction"</Term>
+                <Term>"Data Science"</Term>
+                <Term>"Time series analysis"</Term>
+                <Term>Clustering</Term>
+            </SearchTerms>
+        </Category>
+        <Category name="Exclusion">
+            <SearchTerms>
+                <Term>Gait</Term>
+                <Term>Neuro*</Term>
+                <Term>robot*</Term>
+                <Term>prosthe*</Term>
+            </SearchTerms>
+        </Category>
+    </Categories>
+</SearchConfig>

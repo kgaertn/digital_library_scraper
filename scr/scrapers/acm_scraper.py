@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 import re
 import pandas as pd
 import logging
+import time
+import random
 
 logging.basicConfig(level=logging.INFO)
 
@@ -26,7 +28,7 @@ class ACM_Scraper:
     def parse(self, url = ''):
         soup = self.parse_html(url)
         results_num = int(soup.find('span', class_='hitsLength').get_text(strip=True).replace(',', ''))
-        
+        print(f"ACM: total results found: {results_num}")
         articles = soup.find_all('li', class_='search__item issue-item-container')
         max_results_reached = False
         for res in articles:
@@ -35,7 +37,7 @@ class ACM_Scraper:
                 date = self.extract_date(res)
                 url = self.extract_url(res)
                 item = {
-                'id': self.auto_id,  # Assign the current ID
+                #'id': self.auto_id,  # Assign the current ID
                 'source': 'ACM',
                 'title': self.extract_title(res),
                 'authors': self.extract_authors(res),
@@ -56,6 +58,8 @@ class ACM_Scraper:
         if not max_results_reached:
             if self.auto_id <= int(results_num):
                 next_page = self.auto_id // 20
+                sleep_time = random.randint(1, 15)
+                time.sleep(sleep_time)
                 next_url = f'https://dl.acm.org/action/doSearch?AllField={self.query}&startPage={next_page}&pageSize=20'
                 self.parse(next_url)            
         print('')    
@@ -83,7 +87,7 @@ class ACM_Scraper:
     def extract_doi(self, res):
         res_span = res.find('a', class_='issue-item__doi dot-separator')
         doi_string = ' '.join(res_span.stripped_strings) if res_span != None else None
-        return re.search(r'10\.\d{4,9}/[^\s]+', doi_string).group()
+        return re.search(r'10\.\d{4,9}/[^\s]+', doi_string).group() if res_span != None else None
     
     def extract_url(self, res):
         href = res.find('span', class_='hlFld-Title').find('a').get('href') 
@@ -94,11 +98,13 @@ class ACM_Scraper:
         return int(' '.join(res_span.stripped_strings)) if res_span != None else None
 
     def extract_full_abstract(self, url):
+        sleep_time = random.randint(1, 15)
+        time.sleep(sleep_time)
         soup = self.parse_html(url)
         abstract_section = soup.find('section', {'role': 'doc-abstract'})
         return abstract_section.find('div', {'role': 'paragraph'}).get_text(strip=True) if abstract_section != None else None
 
-    def scrape_articles(self, url = '', max_results = 25):
+    def scrape_articles(self, url = '', max_results = None):
         self.max_results = max_results
         self.parse(url)
         return pd.DataFrame(self.articles)

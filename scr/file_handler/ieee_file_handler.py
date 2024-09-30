@@ -1,7 +1,7 @@
 import pandas as pd
 from lxml import etree
 
-class FileHandler:
+class IeeeFileHandler:
     def __init__(self, file_path):
         """
         Initialize the FileHandler for a filepath.
@@ -11,6 +11,7 @@ class FileHandler:
         """
         self.file_path = file_path
         self.data = None
+        self.processed_data = None
 
     def parse_data(self, data_str):
         """convert comma-separated string to list of floats"""
@@ -29,11 +30,11 @@ class FileHandler:
         elif str(self.file_path).endswith('.xlsx'):
             self.data = self._load_excel()
         # Add more formats as needed
-        return self.data
+        #return self.data
 
     def _load_csv(self):
         """Load CSV file logic"""
-        return pd.read_csv(self.file_path, delimiter=';')
+        return pd.read_csv(self.file_path, delimiter=',')
     
     def _load_tsv(self):
         """Load TSV file logic"""
@@ -46,7 +47,34 @@ class FileHandler:
         """Load Excel file logic"""
         return pd.read_excel(self.file_path)
     
-
+    def process_file(self):
+        """Process the file"""
+        self.processed_data = self.data.drop(columns=['Author Affiliations', 'Date Added To Xplore','Volume', 'Issue',
+            'Start Page', 'End Page', 'Volume', 'Issue','Start Page', 'End Page', 'ISSN', 'ISBNs', 'Funding Information', 'IEEE Terms',
+            'Mesh_Terms', 'Patent Citation Count',
+            'Reference Count', 'License', 'Online Date', 'Issue Date',
+            'Meeting Date', 'Publisher', 'Document Identifier'])
+        
+        self.processed_data = self.processed_data.rename(columns={
+            'Document Title': 'title',
+            'Authors': 'authors',
+            'Publication Title': 'journal_book',
+            'Publication Year': 'year',
+            'Abstract': 'abstract',
+            'DOI': 'doi',
+            'Article Citation Count': 'citation',
+            'PDF Link': 'url',
+            'Author Keywords': 'keywords'
+        })
+        self.processed_data['source'] = 'IEEE'
+        
+        #print()
+    
+    def get_articles(self):
+        self.load_file()
+        self.process_file()
+        return self.processed_data
+        
 
 # TEMP
 # used to test the script
@@ -65,9 +93,12 @@ def main():
     # Create Filehandler
     filehandler = FileHandler(filepath)
     #filehandler = FileHandler(filepath_tsv)
-
-    filehandler.load_file()
+    ieee_articles = filehandler.get_articles()
+    print(ieee_articles.head())
+    #filehandler.load_file()
     #filehandler_tsv.load_file()
+    
+    #filehandler.process_file()
 
 
 
