@@ -1,6 +1,6 @@
 from pathlib import Path
-from file_handler.xml_file_handler import *
-from file_handler.ieee_file_handler import *
+from file_handler.file_handler import *
+#from file_handler.file_handler import *
 from scrapers.acm_scraper import *
 from scrapers.pubmed_scraper import *
 from query_writer.query_writer import *
@@ -22,13 +22,14 @@ def main():
     max_results = None if max_results == 'None' else int(max_results)
     search_type = config.get('search', 'search_type')
     
+    articles_complete = pd.DataFrame(columns=['source', 'title', 'authors', 'date',	'year',	'journal_book',	'doi', 'url', 'abstract', 'keywords', 'citation'])
     # Load the default search terms from the XML config file
     current_path = Path(__file__).resolve().parent
     parent_path = current_path.parent
     config_file_path = os.path.join(parent_path, 'config', 'search_query_config.xml')
     
     #config_file = os.path.join(os.path.dirname(__file__), 'config', 'config.xml')
-    search_config = File_Handler(config_file_path)
+    search_config = Config_File_Handler(config_file_path)
 
     ieee_data_path = parent_path / 'data'
     file_list = [f.name for f in ieee_data_path.iterdir() if '.csv' in f.name]
@@ -36,8 +37,9 @@ def main():
     ieee_articles = pd.DataFrame()
     for file in file_list:
         filepath = os.path.join(ieee_data_path, file)
-        ieee_file_handler = IeeeFileHandler(filepath)
-        ieee_articles = pd.concat([ieee_articles, ieee_file_handler.get_articles()], axis=0)
+        ieee_file_handler = File_Handler(filepath)
+        articles_complete = pd.concat([articles_complete, ieee_file_handler.get_ieee_articles()], axis=0, ignore_index=True)
+        #ieee_articles = pd.concat([ieee_articles, ieee_file_handler.get_ieee_articles()], axis=0)
 
     
     acm_query = None
@@ -52,15 +54,19 @@ def main():
             elif database == 'ACM':
                 acm_query = query_generator.query
     
-    # TODO: check how to include all 
     pubmed_crawler = Pubmed_Scraper(pubmed_query)
-    pubmed_articles = pubmed_crawler.scrape_articles(max_results = max_results)   
+    articles_complete = pd.concat([articles_complete, pubmed_crawler.scrape_articles(max_results = max_results) ], axis=0, ignore_index=True)
+    #pubmed_articles = pubmed_crawler.scrape_articles(max_results = max_results)   
     
-    # TODO: check how to avoid getting blocked 
     acm_crawler = ACM_Scraper(acm_query)
-    acm_articles = acm_crawler.scrape_articles(max_results = max_results)
+    articles_complete = pd.concat([articles_complete, acm_crawler.scrape_articles(max_results = max_results) ], axis=0, ignore_index=True)
     
-    articles_complete = pd.concat([pubmed_articles, acm_articles, ieee_articles], axis=0, ignore_index=True)
+    #acm_articles = acm_crawler.scrape_articles(max_results = max_results)
+    
+    #if ieee_articles.empty:
+    #    articles_complete = pd.concat([pubmed_articles, acm_articles], axis=0, ignore_index=True)
+    #else:
+    #    articles_complete = pd.concat([pubmed_articles, acm_articles, ieee_articles], axis=0, ignore_index=True)
     
     # select only articles within the timespan
     if min_year != None or max_year != None :
@@ -86,7 +92,7 @@ def main():
     file_name = f'{formatted_timestamp}_complete_articles.csv'
     save_path = os.path.join(output_dir, file_name)
     
-    articles_complete.to_csv(save_path, index=True, sep=';')
+    articles_complete.to_csv(save_path, index=True, sep=';', index_label='article id')
 
     print(f'Saved articles to {file_name}')
     

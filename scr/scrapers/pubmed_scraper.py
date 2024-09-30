@@ -81,6 +81,7 @@ class Pubmed_Scraper:
                     'doi': self.extract_doi(res),
                     'url' : self.extract_url(res),
                     'abstract': self.extract_full_abstract(res),
+                    'keywords': self.extract_keywords(res)
                     #'citation': self.extract_citation(res)
                     }
                     
@@ -161,7 +162,7 @@ class Pubmed_Scraper:
         if publication_date is not None:
             month = publication_date.find('.//Month').text if publication_date.find('.//Month') is not None else None
             year = int(publication_date.find('.//Year').text) if publication_date.find('.//Year') is not None else None
-            date = f"{month} {year}"
+            date = f"{month} {year}" if month is not None and year is not None else None
         else:
             date = None
             year = None
@@ -175,10 +176,7 @@ class Pubmed_Scraper:
                 res_part.findall('.//Keyword')   
                 for res_part in res.findall('.//KeywordList')
             ]
-        keywords = [
-            f"{res_part.text}"
-            for res_part in res_list[0]
-        ]
+        keywords = [f"{res_part.text}" for res_part in res_list[0]] if res_list else None
 
         return ', '.join(keywords) if keywords != None else None
     

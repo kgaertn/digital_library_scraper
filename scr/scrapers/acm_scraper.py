@@ -75,7 +75,9 @@ class ACM_Scraper:
     
     def extract_date(self, res):
         res_span = res.find('div', class_='bookPubDate simple-tooltip__block--b')
-        return ' '.join(res_span.stripped_strings) if res_span != None else None
+        #return ' '.join([(res_span.stripped_strings).split()[0][:3], (res_span.stripped_strings).split()[1]]) if res_span != None else None
+        return ' '.join([(' '.join(res_span.stripped_strings)).split()[0][:3], (' '.join(res_span.stripped_strings)).split()[1]])
+        #return ' '.join(res_span.stripped_strings) if res_span != None else None
     
     def extract_year(self, date_str):
         return int(re.search(r'\b\d{4}\b', date_str).group())
