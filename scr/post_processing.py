@@ -16,13 +16,12 @@ def pilot_randomizing(df, nr_randomizations):
 
     random_values = get_randomization_list(nr_randomizations,min_value, max_value)
     
-    df['pilot'] = None  # Initialize with None
+    df['pilot'] = None
     df.loc[df['article_id'].isin(random_values), 'pilot'] = 'x'   
     return df     
 
 def mark_duplicates(df):
-    # Create a new column 'duplicate' and mark duplicates with 'x'
-    # Create a new column 'is_duplicate_or_empty'
+    # Create a new column 'duplicate' and mark duplicates or articles without a doi with 'x'
     df['duplicate'] = df.apply(
         lambda row: 'x' if pd.isna(row['doi']) or row['doi'] == '' or df.duplicated(subset='doi', keep=False).loc[row.name] 
         else '', axis=1

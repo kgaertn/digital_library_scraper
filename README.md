@@ -1,8 +1,8 @@
 # Digital Library Scraper
 
-### Scrapes information about publications found for specific search queries from Pubmed and ACM, loads a pre-downloaded file from IEEE libary and combines them into one complete CSV file
+Scrapes information about publications found for specific search queries from Pubmed and ACM, loads a pre-downloaded file from IEEE libary and combines them into one complete CSV file
 
-### Can e.g. scrape title, authors, abstract, keywords, publication year to simplify larger literature research
+Can e.g. scrape title, authors, abstract, keywords, publication year to simplify larger literature research
 
 ## Project installation:
 
@@ -11,10 +11,11 @@
    git clone https://github.com/kgaertn/digital_library_scraper.git
 
 2. Navigate into the project directory
-
+    ```bash
     cd path_to_project_folder/digital_library_scraper
 
 3. Install dependencies
+    ```bash
     pip install -r requirements.txt
 
 ## Usage
@@ -32,11 +33,11 @@
     - stores the categories and terms for the search
     - terms within categories will be OR connected
     - categories will be AND connected
-    - the exclusion category 'Exclusion' will be NOT connected
+    - the exclusion category 'Exclusion' will be NOT connected, remove this category if no exclusion criteria are needed
 3. Get articles from the IEEE Xplore library if needed
     - run the scr/query_writer/database_query_writer.py to generate a query for the ieee database
     - copy the search into the ieee search 
-    - export the results to a csv file and store in the data folder (NOTE: every csv file in the data folder will later be added to the resulting csv)
+    - export the results to a csv file and store in the input folder (NOTE: every csv file in the input folder will later be added to the resulting csv)
 4. run the scr/pipeline.py
     - the ieee file will be loaded and added to the new csv file
     - a pubmed query will be created and the resulting publications will be added to the resulting csv file
