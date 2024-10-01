@@ -27,8 +27,6 @@ def mark_duplicates(df):
         lambda row: 'x' if pd.isna(row['doi']) or row['doi'] == '' or df.duplicated(subset='doi', keep=False).loc[row.name] 
         else '', axis=1
     )
-    
-    #df['duplicate'] = df.duplicated(subset='doi', keep=False).replace({True: 'x', False: ''})
     return df
 
 
@@ -55,16 +53,13 @@ def main():
         df = file_handler.get_raw_data()
         
         if screening != 'None': 
-            if screening.lower() == 'title/abstract':
-                nr_randomizations = config.getint('pilot', 'nr_title_abstract') 
-            elif screening.lower == 'fulltext':
-                nr_randomizations = config.getint('pilot', 'nr_full_text') 
+            nr_randomizations = config.getint('pilot', 'nr_randomizations') 
             df = pilot_randomizing(df, nr_randomizations)
         
         df = mark_duplicates(df)
         
         df.to_csv(filepath, index=False, sep=';')
-        print(f'Randomization for {screening} pilot screening finished')
+        print(f'Duplicates and/or randomization finished')
 
 
 if __name__ == "__main__":

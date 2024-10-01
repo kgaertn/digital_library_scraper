@@ -29,7 +29,7 @@ def main():
     
     search_config = Config_File_Handler(config_file_path)
 
-    ieee_data_path = parent_path / 'data'
+    ieee_data_path = parent_path / 'input'
     file_list = [f.name for f in ieee_data_path.iterdir() if '.csv' in f.name]
 
     for file in file_list:

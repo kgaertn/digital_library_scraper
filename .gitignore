@@ -161,7 +161,9 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# iee data folder
-data/
+# ieee input data folder
+input/*
+!output/.gitkeep
 # output folder
-output/
+output/*
+!output/.gitkeep
