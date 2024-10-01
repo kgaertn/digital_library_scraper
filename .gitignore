@@ -163,7 +163,7 @@ cython_debug/
 
 # ieee input data folder
 input/*
-!output/.gitkeep
+!input/.gitkeep
 # output folder
 output/*
 !output/.gitkeep
