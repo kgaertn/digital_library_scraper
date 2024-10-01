@@ -1,5 +1,4 @@
-feedparser==6.0.11
+pandas==2.2.2
 lxml
-#scrapy
+requests
 beautifulsoup4
-#requests beautifulsoup4 # doesn't run from the requirements file, install manually using pip install

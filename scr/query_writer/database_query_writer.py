@@ -10,12 +10,13 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '.
 from scr.file_handler.file_handler import *  
 
 
-def main(database):
+def main():
     config = configparser.ConfigParser()
     # Read the ini file
     config.read('config/search_param_config.ini')
     # Retrieve parameters for the search and convert to the appropriate types
     search_type = config.get('search', 'search_type')
+    database = config.get('search', 'database')
 
     # Load the default search terms from the XML config file
     current_path = Path(__file__).resolve().parent
@@ -31,7 +32,5 @@ def main(database):
     print(f'Resulting {database} Query: \n' + ieee_query)
     
 if __name__ == "__main__":
-    # change the database name to generate a query for a different database (pubmed or acm)
-    database = 'ieee'
-    main(database)    
+    main()    
 

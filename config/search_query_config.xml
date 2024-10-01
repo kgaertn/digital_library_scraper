@@ -65,6 +65,9 @@
                 <Term>"Motion analysis"</Term>
                 <Term>"Multimodal"</Term>
                 <Term>IMU</Term>
+                <Term>"inertial measurement unit"</Term>
+                <Term>"ground reaction force"</Term>
+                <Term>"GRF"</Term>
             </SearchTerms>
         </Category>
         <Category name="Analysis Methods">

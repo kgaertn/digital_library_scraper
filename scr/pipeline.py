@@ -27,22 +27,17 @@ def main():
     parent_path = current_path.parent
     config_file_path = os.path.join(parent_path, 'config', 'search_query_config.xml')
     
-    #config_file = os.path.join(os.path.dirname(__file__), 'config', 'config.xml')
     search_config = Config_File_Handler(config_file_path)
 
     ieee_data_path = parent_path / 'data'
     file_list = [f.name for f in ieee_data_path.iterdir() if '.csv' in f.name]
-    
-    #ieee_articles = pd.DataFrame()
+
     for file in file_list:
         filepath = os.path.join(ieee_data_path, file)
         ieee_file_handler = File_Handler(filepath, sep=',')
         ieee_df = ieee_file_handler.get_ieee_articles()
-        #for column in ieee_df.columns:
         ieee_df = ieee_df.applymap(lambda x: x.replace('; ', ', ') if isinstance(x, str) else x)
         articles_complete = pd.concat([articles_complete, ieee_df], axis=0, ignore_index=True)
-        #ieee_articles = pd.concat([ieee_articles, ieee_file_handler.get_ieee_articles()], axis=0)
-
     
     acm_query = None
     pubmed_query = None
