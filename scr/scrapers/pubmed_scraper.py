@@ -132,33 +132,53 @@ class Pubmed_Scraper:
         return f"https://pubmed.ncbi.nlm.nih.gov/{href}/" 
 
     def extract_full_abstract(self, article):
-        abstract_list = [
-                abstract_part.findall('.//AbstractText')   
-                for abstract_part in article.findall('.//Abstract')
-            ]
-        if abstract_list != []: 
-            abstract = [
-                f"{abstract_part.text}"
-                if abstract_list is not None else None
-                for abstract_part in abstract_list[0] 
-            ]
-        else:
-            abstract = None
-        return ' '.join(abstract) if abstract != None else None
+        abstract_list = []
+                # Iterate over each abstract part
+        for abstract_part in article.findall('.//Abstract'):
+            # Use the .iter() method to get all elements in the correct order
+            for elem in abstract_part.iter():
+                # If the element is of interest (AbstractText, sup, or i), extract its text
+                if elem.tag in ['AbstractText', 'sup', 'i', 'strong.sub-title']:
+                    if 'Label' in elem.attrib:
+                        # Format the label in title case and append it
+                        label = elem.attrib['Label'].title()
+                        abstract_list.append(f"{label}: ")
+                    text = elem.text or ''  # Get the text, handling cases where text might be None
+                    abstract_list.append(text)
+                # Also, append any tail text (text after the closing tag)
+                if elem.tail:
+                    abstract_list.append(elem.tail)
+        # Join the parts into a full abstract string
+        return ''.join(abstract_list)
+        
+        
+        #abstract_list = [
+        #        abstract_part.findall('.//AbstractText')   
+        #        for abstract_part in article.findall('.//Abstract')
+        #    ]
+        #if abstract_list != []: 
+        #    abstract = [
+        #        f"{abstract_part.text}"
+        #        if abstract_list is not None else None
+        #        for abstract_part in abstract_list[0] 
+        #    ]
+        #else:
+        #    abstract = None
+        #return ' '.join(abstract) if abstract != None else None
     
     def scrape_articles(self, max_results = None):
         self.max_results = max_results
         self.parse()
         return pd.DataFrame(self.articles)
 
-#def main():
-#    query = 'machine learning'
-#    
-#    pubmed_crawler = Pubmed_Scraper(query = query)
-#    pubmed_articles = pubmed_crawler.scrape_articles(500)
-#    
-#    print('')
-#    
-## Run the script
-#if __name__ == "__main__":
-#    main()
+def main():
+    query = 'Kinematical alignment better restores native patellar tracking pattern than mechanical alignment.'
+    
+    pubmed_crawler = Pubmed_Scraper(query = query)
+    pubmed_articles = pubmed_crawler.scrape_articles(10)
+    
+    print('')
+    
+# Run the script
+if __name__ == "__main__":
+    main()
