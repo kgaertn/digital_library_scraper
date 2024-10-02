@@ -150,21 +150,6 @@ class Pubmed_Scraper:
                     abstract_list.append(elem.tail)
         # Join the parts into a full abstract string
         return ''.join(abstract_list)
-        
-        
-        #abstract_list = [
-        #        abstract_part.findall('.//AbstractText')   
-        #        for abstract_part in article.findall('.//Abstract')
-        #    ]
-        #if abstract_list != []: 
-        #    abstract = [
-        #        f"{abstract_part.text}"
-        #        if abstract_list is not None else None
-        #        for abstract_part in abstract_list[0] 
-        #    ]
-        #else:
-        #    abstract = None
-        #return ' '.join(abstract) if abstract != None else None
     
     def scrape_articles(self, max_results = None):
         self.max_results = max_results
