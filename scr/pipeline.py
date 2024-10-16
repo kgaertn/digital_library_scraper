@@ -1,3 +1,9 @@
+# Author: Kaya Gärtner
+# Date: 16.10.2024
+# Description: Script to scrape information (such as author, title, abstract) about publications 
+#               found for specific search queries from Pubmed and ACM, as well as loading a 
+#               pre-downloaded file from IEEE libary and combine them into one complete CSV file
+
 from pathlib import Path
 from file_handler.file_handler import *
 from scrapers.acm_scraper import *
@@ -21,7 +27,7 @@ def main():
     max_results = None if max_results == 'None' else int(max_results)
     search_type = config.get('search', 'search_type')
     
-    articles_complete = pd.DataFrame(columns=['source', 'title', 'authors', 'date',	'year',	'journal_book',	'doi', 'url', 'abstract', 'keywords', 'citation'])
+    articles_complete = pd.DataFrame(columns=['source', 'title', 'authors', 'date',	'year',	'journal_book',	'doi', 'pmid', 'url', 'abstract', 'keywords', 'citation'])
     # Load the default search terms from the XML config file
     current_path = Path(__file__).resolve().parent
     parent_path = current_path.parent

@@ -1,0 +1,491 @@
+<PubmedBookArticle>
+  <BookDocument>
+    <PMID>
+      Attributes: {'Version': '1'}
+      Text: 20301586
+    <ArticleIdList>
+      <ArticleId>
+        Attributes: {'IdType': 'bookaccession'}
+        Text: NBK1413
+    <Book>
+      <Publisher>
+        <PublisherName>
+          Text: University of Washington, Seattle
+        <PublisherLocation>
+          Text: Seattle (WA)
+      <BookTitle>
+        Attributes: {'book': 'gene'}
+        Text: GeneReviews
+        <sup>
+          Text: ®
+      <PubDate>
+        <Year>
+          Text: 1993
+      <BeginningDate>
+        <Year>
+          Text: 1993
+      <EndingDate>
+        <Year>
+          Text: 2024
+      <AuthorList>
+        Attributes: {'Type': 'editors', 'CompleteYN': 'Y'}
+        <Author>
+          Attributes: {'ValidYN': 'Y'}
+          <LastName>
+            Text: Adam
+          <ForeName>
+            Text: Margaret P
+          <Initials>
+            Text: MP
+        <Author>
+          Attributes: {'ValidYN': 'Y'}
+          <LastName>
+            Text: Feldman
+          <ForeName>
+            Text: Jerry
+          <Initials>
+            Text: J
+        <Author>
+          Attributes: {'ValidYN': 'Y'}
+          <LastName>
+            Text: Mirzaa
+          <ForeName>
+            Text: Ghayda M
+          <Initials>
+            Text: GM
+        <Author>
+          Attributes: {'ValidYN': 'Y'}
+          <LastName>
+            Text: Pagon
+          <ForeName>
+            Text: Roberta A
+          <Initials>
+            Text: RA
+        <Author>
+          Attributes: {'ValidYN': 'Y'}
+          <LastName>
+            Text: Wallace
+          <ForeName>
+            Text: Stephanie E
+          <Initials>
+            Text: SE
+        <Author>
+          Attributes: {'ValidYN': 'Y'}
+          <LastName>
+            Text: Amemiya
+          <ForeName>
+            Text: Anne
+          <Initials>
+            Text: A
+      <Medium>
+        Text: Internet
+    <ArticleTitle>
+      Attributes: {'book': 'gene', 'part': 'menkes'}
+      <i>
+        Text: ATP7A
+    <Language>
+      Text: eng
+    <AuthorList>
+      Attributes: {'Type': 'authors', 'CompleteYN': 'Y'}
+      <Author>
+        Attributes: {'ValidYN': 'Y'}
+        <LastName>
+          Text: Kaler
+        <ForeName>
+          Text: Stephen G
+        <Initials>
+          Text: SG
+        <AffiliationInfo>
+          <Affiliation>
+            Text: CAPT, US Public Health Service (Ret), Professor of Pediatrics and Genetics, The Ohio State University College of Medicine;, Center for Gene Therapy, Abigail Wexner Research Institute, Nationwide Children’s Hospital, Columbus, Ohio
+      <Author>
+        Attributes: {'ValidYN': 'Y'}
+        <LastName>
+          Text: DiStasio
+        <ForeName>
+          Text: Andrew T
+        <Initials>
+          Text: AT
+        <AffiliationInfo>
+          <Affiliation>
+            Text: Center for Gene Therapy, Abigail Wexner Research Institute, Nationwide Children’s Hospital, Columbus, Ohio
+    <PublicationType>
+      Attributes: {'UI': 'D016454'}
+      Text: Review
+    <Abstract>
+      <AbstractText>
+        Attributes: {'Label': 'CLINICAL DESCRIPTION'}
+        Text: Menkes disease, occipital horn syndrome (OHS), and
+        <i>
+          Text: ATP7A
+        <i>
+          Text: ATP7A
+        <i>
+          Text: ATP7A
+        <b>
+          Text: classic Menkes disease
+        <b>
+          Text: OHS
+        <b>
+          <i>
+            Text: ATP7A
+      <AbstractText>
+        Attributes: {'Label': 'DIAGNOSIS/TESTING'}
+        Text: Menkes disease and OHS are characterized by low concentrations of copper in some tissues as a result of impaired intestinal copper absorption, accumulation of copper in other tissues, and reduced activity of copper-dependent enzymes such as dopamine-beta-hydroxylase (DBH) and lysyl oxidase. While serum copper concentration and serum ceruloplasmin concentration are low in Menkes disease and OHS, they are normal in
+        <i>
+          Text: ATP7A
+        <i>
+          Text: ATP7A
+        <i>
+          Text: ATP7A
+        <i>
+          Text: ATP7A
+      <AbstractText>
+        Attributes: {'Label': 'MANAGEMENT'}
+        <i>
+          Text: Prevention of primary manifestations (and treatment):
+        <i>
+          Text: Treatment of manifestations:
+        <i>
+          Text: ATP7A
+        <i>
+          Text: pes cavus
+        <i>
+          Text: Surveillance:
+        <i>
+          Text: ATP7A
+      <AbstractText>
+        Attributes: {'Label': 'GENETIC COUNSELING'}
+        Text: The
+        <i>
+          Text: ATP7A
+        <i>
+          Text: ATP7A
+        <i>
+          Text: ATP7A
+      <CopyrightInformation>
+        Text: Copyright © 1993-2024, University of Washington, Seattle. GeneReviews is a registered trademark of the University of Washington, Seattle. All rights reserved.
+    <Sections>
+      <Section>
+        <SectionTitle>
+          Attributes: {'book': 'gene', 'part': 'menkes', 'sec': 'menkes.Summary'}
+          Text: Summary
+      <Section>
+        <SectionTitle>
+          Attributes: {'book': 'gene', 'part': 'menkes', 'sec': 'menkes.GeneReview_Scope'}
+          <i>
+            Text: GeneReview
+      <Section>
+        <SectionTitle>
+          Attributes: {'book': 'gene', 'part': 'menkes', 'sec': 'menkes.Diagnosis'}
+          Text: Diagnosis
+      <Section>
+        <SectionTitle>
+          Attributes: {'book': 'gene', 'part': 'menkes', 'sec': 'menkes.Clinical_Characteristics'}
+          Text: Clinical Characteristics
+      <Section>
+        <SectionTitle>
+          Attributes: {'book': 'gene', 'part': 'menkes', 'sec': 'menkes.Genetically_Related_Allelic_Disor'}
+          Text: Genetically Related (Allelic) Disorders
+      <Section>
+        <SectionTitle>
+          Attributes: {'book': 'gene', 'part': 'menkes', 'sec': 'menkes.Differential_Diagnosis'}
+          Text: Differential Diagnosis
+      <Section>
+        <SectionTitle>
+          Attributes: {'book': 'gene', 'part': 'menkes', 'sec': 'menkes.Management'}
+          Text: Management
+      <Section>
+        <SectionTitle>
+          Attributes: {'book': 'gene', 'part': 'menkes', 'sec': 'menkes.Genetic_Counseling'}
+          Text: Genetic Counseling
+      <Section>
+        <SectionTitle>
+          Attributes: {'book': 'gene', 'part': 'menkes', 'sec': 'menkes.Resources'}
+          Text: Resources
+      <Section>
+        <SectionTitle>
+          Attributes: {'book': 'gene', 'part': 'menkes', 'sec': 'menkes.Molecular_Genetics'}
+          Text: Molecular Genetics
+      <Section>
+        <SectionTitle>
+          Attributes: {'book': 'gene', 'part': 'menkes', 'sec': 'menkes.Chapter_Notes'}
+          Text: Chapter Notes
+      <Section>
+        <SectionTitle>
+          Attributes: {'book': 'gene', 'part': 'menkes', 'sec': 'menkes.References'}
+          Text: References
+    <KeywordList>
+      Attributes: {'Owner': 'NLM'}
+      <Keyword>
+        Attributes: {'MajorTopicYN': 'N'}
+        Text: Classic Menkes Disease
+      <Keyword>
+        Attributes: {'MajorTopicYN': 'N'}
+        Text: Occipital Horn Syndrome
+      <Keyword>
+        Attributes: {'MajorTopicYN': 'N'}
+        Text: ATP7A-Related Distal Motor Neuropathy
+      <Keyword>
+        Attributes: {'MajorTopicYN': 'N'}
+        Text: Copper-transporting ATPase 1
+      <Keyword>
+        Attributes: {'MajorTopicYN': 'N'}
+        Text: ATP7A
+      <Keyword>
+        Attributes: {'MajorTopicYN': 'N'}
+        Text: ATP7A-Related Copper Transport Disorders
+    <ContributionDate>
+      <Year>
+        Text: 2003
+      <Month>
+        Text: 5
+      <Day>
+        Text: 9
+    <DateRevised>
+      <Year>
+        Text: 2021
+      <Month>
+        Text: 4
+      <Day>
+        Text: 15
+    <ReferenceList>
+      <Reference>
+        <Citation>
+          Text: Borm B, Moller LB, Hausser I, Emeis M, Baerlocher K, Horn N, Rossi R. Variable clinical expression of an identical mutation in the ATP7A gene for Menkes disease/occipital horn syndrome in three affected males in a single family. J Pediatr. 2004;145:119–21.
+        <ArticleIdList>
+          <ArticleId>
+            Attributes: {'IdType': 'pubmed'}
+            Text: 15238919
+      <Reference>
+        <Citation>
+          Text: Desai V, Donsante A, Swoboda KJ, Martensen M, Thompson J, Kaler SG. Favorably skewed X-inactivation accounts for neurological sparing in female carriers of Menkes disease. Clin Genet. 2011;79:176–82.
+        <ArticleIdList>
+          <ArticleId>
+            Attributes: {'IdType': 'pmc'}
+            Text: PMC3099248                                                                                       
+          <ArticleId>
+            Attributes: {'IdType': 'pubmed'}
+            Text: 20497190
+      <Reference>
+        <Citation>
+          Text: Donsante A, Tang JR, Godwin SC, Holmes CS, Goldstein DS, Bassuk A, Kaler SG. Differences in ATP7A gene expression underlie intra-familial variability in Menkes disease/occipital horn syndrome. J Med Genet. 2007;44:492–7.
+        <ArticleIdList>
+          <ArticleId>
+            Attributes: {'IdType': 'pmc'}
+            Text: PMC2597922                                                                                       
+          <ArticleId>
+            Attributes: {'IdType': 'pubmed'}
+            Text: 17496194
+      <Reference>
+        <Citation>
+          Text: Donsante A, Yi L, Zerfas P, Brinster L, Sullivan P, Goldstein DS, Prohaska J, Centeno JA, Kaler SG. ATP7A gene addition to the choroid plexus results in long-term rescue of the lethal copper transport defect in a Menkes disease mouse model. Mol Ther. 2011;19:2114–23.
+        <ArticleIdList>
+          <ArticleId>
+            Attributes: {'IdType': 'pmc'}
+            Text: PMC3242653                                                                                       
+          <ArticleId>
+            Attributes: {'IdType': 'pubmed'}
+            Text: 21878905
+      <Reference>
+        <Citation>
+          Text: Haddad MR, Choi EY, Zerfas PM, Yi L, Martinelli D, Sullivan P, Goldstein DS, Centeno J, Brinster L, Ralle M, Kaler SG. Cerebrospinal fluid-directed rAAV9-rsATP7A plus subcutaneous copper histidinate advance survival and outcomes in a Menkes disease mouse model. Mol Ther Methods Clin Dev. 2018;10:165–78.
+        <ArticleIdList>
+          <ArticleId>
+            Attributes: {'IdType': 'pmc'}
+            Text: PMC6080355                                                                                       
+          <ArticleId>
+            Attributes: {'IdType': 'pubmed'}
+            Text: 30090842
+      <Reference>
+        <Citation>
+          Text: Hill SC, Dwyer AJ, Kaler SG. Cervical spine anomalies in Menkes disease: a radiologic finding potentially confused with child abuse. Pediatr Radiol. 2012;42:1301–4.
+        <ArticleIdList>
+          <ArticleId>
+            Attributes: {'IdType': 'pmc'}
+            Text: PMC3482292                                                                                       
+          <ArticleId>
+            Attributes: {'IdType': 'pubmed'}
+            Text: 22825777
+      <Reference>
+        <Citation>
+          Text: Huang SJ, Amendola LM, Sternen DL. Variation among DNA banking consent forms: points for clinicians to bank on. J Community Genet. 2022;13:389–97.
+        <ArticleIdList>
+          <ArticleId>
+            Attributes: {'IdType': 'pmc'}
+            Text: PMC9314484                                                                                       
+          <ArticleId>
+            Attributes: {'IdType': 'pubmed'}
+            Text: 35834113
+      <Reference>
+        <Citation>
+          Text: Kaler SG. The neurology of ATP7A copper transporter disease: emerging concepts and future trends. Nat Rev Neurol. 2011;7:15–29.
+        <ArticleIdList>
+          <ArticleId>
+            Attributes: {'IdType': 'pmc'}
+            Text: PMC4214867                                                                                       
+          <ArticleId>
+            Attributes: {'IdType': 'pubmed'}
+            Text: 21221114
+      <Reference>
+        <Citation>
+          Text: Kaler SG, Buist NR, Holmes CS, Goldstein DS, Miller RC, Gahl WA. Early copper therapy in classic Menkes disease patients with a novel splicing mutation. Ann Neurol. 1995;38:921–8.
+        <ArticleIdList>
+          <ArticleId>
+            Attributes: {'IdType': 'pubmed'}
+            Text: 8526465
+      <Reference>
+        <Citation>
+          Text: Kaler SG, Ferreira CR, Yam LS. Estimated genetic prevalence of Menkes disease based on the Genome Aggregation Database (gnomAD). Mol Genet Metab Rep. 2020;24:100602.
+        <ArticleIdList>
+          <ArticleId>
+            Attributes: {'IdType': 'pmc'}
+            Text: PMC7283148                                                                                       
+          <ArticleId>
+            Attributes: {'IdType': 'pubmed'}
+            Text: 32528851
+      <Reference>
+        <Citation>
+          Text: Kaler SG, Gallo LK, Proud VK, Percy AK, Mark Y, Segal NA, Goldstein DS, Holmes CS, Gahl WA. Occipital horn syndrome and a mild Menkes phenotype associated with splice site mutations at the MNK locus. Nat Genet. 1994;8:195–202.
+        <ArticleIdList>
+          <ArticleId>
+            Attributes: {'IdType': 'pubmed'}
+            Text: 7842019
+      <Reference>
+        <Citation>
+          Text: Kaler SG, Holmes CS, Goldstein DS, Tang JR, Godwin SC, Donsante A, Liew CJ, Sato S, Patronas N. Neonatal diagnosis and treatment of Menkes disease. N Engl J Med. 2008;358:605–14.
+        <ArticleIdList>
+          <ArticleId>
+            Attributes: {'IdType': 'pmc'}
+            Text: PMC3477514                                                                                       
+          <ArticleId>
+            Attributes: {'IdType': 'pubmed'}
+            Text: 18256395
+      <Reference>
+        <Citation>
+          Text: Kaler SG, Liew CJ, Donsante A, Hicks JD, Sato S, Greenfield JC. Molecular correlates of epilepsy in early diagnosed and treated Menkes disease. J Inher Metab Dis. 2010;33:583–9.
+        <ArticleIdList>
+          <ArticleId>
+            Attributes: {'IdType': 'pmc'}
+            Text: PMC3113468                                                                                       
+          <ArticleId>
+            Attributes: {'IdType': 'pubmed'}
+            Text: 20652413
+      <Reference>
+        <Citation>
+          Text: Kennerson M, Nicholson G, Kowalski B, Krajewski K, El-Khechen D, Feely S, Chu S, Shy M, Garbern J. X-linked distal hereditary motor neuropathy maps to the DSMAX locus on chromosome Xq13.1-q21. Neurology. 2009;72:246–52.
+        <ArticleIdList>
+          <ArticleId>
+            Attributes: {'IdType': 'pubmed'}
+            Text: 19153371
+      <Reference>
+        <Citation>
+          Text: Kennerson ML, Nicholson GA, Kaler SG, Kowalski B, Mercer JF, Tang J, Llanos RM, Chu S, Takata RI, Speck-Martins CE, Baets J, Almeida-Souza L, Fischer D, Timmerman V, Taylor PE, Scherer SS, Ferguson TA, Bird TD, De Jonghe P, Feely SM, Shy ME, Garbern JY. Missense mutations in the copper transporter gene ATP7A cause X-linked distal hereditary motor neuropathy. Am J Hum Genet. 2010;86:343–52.
+        <ArticleIdList>
+          <ArticleId>
+            Attributes: {'IdType': 'pmc'}
+            Text: PMC2833394                                                                                       
+          <ArticleId>
+            Attributes: {'IdType': 'pubmed'}
+            Text: 20170900
+      <Reference>
+        <Citation>
+          Text: Moore CM, Howell RR. Ectodermal manifestations in Menkes disease. Clin Genet. 1985;28:532–40.
+        <ArticleIdList>
+          <ArticleId>
+            Attributes: {'IdType': 'pubmed'}
+            Text: 4075564
+      <Reference>
+        <Citation>
+          Text: Parad RB, Kaler SG, Mauceli E, Sokolsky T, Yi L, Bhattacharjee A. Targeted next generation sequencing for newborn screening of Menkes disease. Mol Genet Metab Rep. 2020;24:100625.
+        <ArticleIdList>
+          <ArticleId>
+            Attributes: {'IdType': 'pmc'}
+            Text: PMC7378272                                                                                       
+          <ArticleId>
+            Attributes: {'IdType': 'pubmed'}
+            Text: 32714836
+      <Reference>
+        <Citation>
+          Text: Richards S, Aziz N, Bale S, Bick D, Das S, Gastier-Foster J, Grody WW, Hegde M, Lyon E, Spector E, Voelkerding K, Rehm HL, et al. Standards and guidelines for the interpretation of sequence variants: a joint consensus recommendation of the American College of Medical Genetics and Genomics and the Association for Molecular Pathology. Genet Med. 2015;17:405–24.
+        <ArticleIdList>
+          <ArticleId>
+            Attributes: {'IdType': 'pmc'}
+            Text: PMC4544753                                                                                       
+          <ArticleId>
+            Attributes: {'IdType': 'pubmed'}
+            Text: 25741868
+      <Reference>
+        <Citation>
+          Text: Stenson PD, Mort M, Ball EV, Chapman M, Evans K, Azevedo L, Hayden M, Heywood S, Millar DS, Phillips AD, Cooper DN. The Human Gene Mutation Database (HGMD®): optimizing its use in a clinical diagnostic or research setting. Hum Genet. 2020;139:1197–207.
+        <ArticleIdList>
+          <ArticleId>
+            Attributes: {'IdType': 'pmc'}
+            Text: PMC7497289                                                                                       
+          <ArticleId>
+            Attributes: {'IdType': 'pubmed'}
+            Text: 32596782
+      <Reference>
+        <Citation>
+          Text: Stevens KE, Price JE, Marko J, Kaler SG. Neck masses due to internal jugular vein phlebectasia: frequency in Menkes disease and literature review of 85 pediatric cases. Am J Med Genet Part A. 2020;182:1364–77.
+        <ArticleIdList>
+          <ArticleId>
+            Attributes: {'IdType': 'pubmed'}
+            Text: 32293788
+      <Reference>
+        <Citation>
+          Text: Yi L, Donsante A, Kennerson ML, Mercer JFB, Garbern JY, Kaler SG. Altered intracellular localization and valosin-containing protein (p97 VCP) interaction underlie ATP7A-related distal motor neuropathy. Hum Mol Genet. 2012;21:1794–807.
+        <ArticleIdList>
+          <ArticleId>
+            Attributes: {'IdType': 'pmc'}
+            Text: PMC3313796                                                                                       
+          <ArticleId>
+            Attributes: {'IdType': 'pubmed'}
+            Text: 22210628
+      <Reference>
+        <Citation>
+          Text: Yi L, Kaler SG. Interaction between the AAA ATPase p97/VCP and a concealed UBX domain in the copper transporter ATP7A is associated with motor neuron degeneration. J Biol Chem. 2018;293:7606–17.
+        <ArticleIdList>
+          <ArticleId>
+            Attributes: {'IdType': 'pmc'}
+            Text: PMC5961040                                                                                       
+          <ArticleId>
+            Attributes: {'IdType': 'pubmed'}
+            Text: 29599289
+  <PubmedBookData>
+    <History>
+      <PubMedPubDate>
+        Attributes: {'PubStatus': 'entrez'}
+        <Year>
+          Text: 2021
+        <Month>
+          Text: 4
+        <Day>
+          Text: 15
+      <PubMedPubDate>
+        Attributes: {'PubStatus': 'medline'}
+        <Year>
+          Text: 2021
+        <Month>
+          Text: 4
+        <Day>
+          Text: 15
+      <PubMedPubDate>
+        Attributes: {'PubStatus': 'pubmed'}
+        <Year>
+          Text: 2021
+        <Month>
+          Text: 4
+        <Day>
+          Text: 15
+    <PublicationStatus>
+      Text: ppublish
+    <ArticleIdList>
+      <ArticleId>
+        Attributes: {'IdType': 'pubmed'}
+        Text: 20301586
+
+res.find('.//PMID')
+<Element 'PMID' at 0x000001DD3521C8B0>
+res.find('.//PMID').text
+'20301586'
