@@ -46,5 +46,5 @@ Can e.g. scrape title, authors, abstract, keywords, publication year to simplify
 5. run the scr/post_processing.py
     - will add a column for the pilot screening that marks a randomized sample of the predefined size, if screening is not set to None (config file)
     - will mark duplicates based on the doi (NOTE: all duplicates will be marked, and so will publications without a doi, results need to be manually checked)
-    - will read all files in the output folder and perform the postprocessing steps
+    - Note: will read all files in the output folder and perform the postprocessing steps
 

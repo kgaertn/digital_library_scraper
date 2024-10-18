@@ -4,8 +4,14 @@ import logging
 import pandas as pd
 import time
 import random
+import re
 
-logging.basicConfig(level=logging.INFO)
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+from scr.color_logger import logger
+
+#logging.basicConfig(level=logging.INFO)
 
 class Pubmed_Scraper:
     def __init__(self, query='machine learning', max_results = None):
@@ -87,6 +93,9 @@ class Pubmed_Scraper:
         }
         
         search_response = self.fetch_with_retries(self.search_url, params=search_params)
+        if self.request_error(search_response.text):
+            return
+        
         #search_response = requests.get(self.search_url, params=search_params)
         search_tree = ET.fromstring(search_response.content)
         results_num = int(search_tree.find('.//Count').text)
@@ -141,6 +150,24 @@ class Pubmed_Scraper:
         #print('All done')
 
 
+    def request_error(self, xml_string):
+        if "An error occurred while processing request" in xml_string:
+            # Regular expression to match text after the first occurrence of "Details:"
+            match = re.search(r'Details:\s*(.*?)(?:</|$)', xml_string)
+
+            # Extract and print the result if found
+            if match:
+                result = match.group(1)
+                logger.warning(f"Pubmed Search request failed: {result}")
+                #print(result)
+            else:
+                logger.warning(f"Pubmed Search request failed: No 'Details' found.")
+            
+            return True
+        else:
+            return False
+                #print("No 'Details' found.")
+            
     # Function to recursively print XML structure
     def print_xml_tree(self, element, indent=""):
         # Print the current element and its tag
@@ -165,7 +192,7 @@ class Pubmed_Scraper:
             #self.print_xml_tree(fetch_tree)
             #END TEMP
             if self.max_results == None or self.auto_id <= self.max_results:
-                logging.info(f'Scraping PubMed: Article Nr. {self.auto_id} of {self.max_results}')
+                logger.info(f'Scraping PubMed: Article Nr. {self.auto_id} of {self.max_results}')
                 date, year = self.extract_date(res)
                 #url = self.extract_url(res)
                 item = {
@@ -192,7 +219,7 @@ class Pubmed_Scraper:
             #END TEMP
             
             if self.max_results == None or self.auto_id <= self.max_results:
-                logging.info(f'Scraping PubMed: Article Nr. {self.auto_id} of {self.max_results}')
+                logger.info(f'Scraping PubMed: Article Nr. {self.auto_id} of {self.max_results}')
                 date, year = self.extract_date(res)
                 #url = self.extract_url(res)
                 item = {

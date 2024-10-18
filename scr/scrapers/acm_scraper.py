@@ -2,11 +2,17 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import pandas as pd
-import logging
 import time
 import random
+#import logging
 
-logging.basicConfig(level=logging.INFO)
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+from scr.color_logger import logger
+
+
+#logging.basicConfig(level=logging.INFO)
 
 class ACM_Scraper:
     def __init__(self, query='machine learning', max_results = None):
@@ -34,7 +40,7 @@ class ACM_Scraper:
         max_results_reached = False
         for res in articles:
             if self.max_results == None or self.auto_id <= self.max_results:
-                logging.info(f'Scraping ACM DL: Article Nr. {self.auto_id} of {results_num}')
+                logger.info(f'Scraping ACM DL: Article Nr. {self.auto_id} of {results_num}')
                 date = self.extract_date(res)
                 url = self.extract_url(res)
                 item = {

@@ -9,11 +9,17 @@ from file_handler.file_handler import *
 from scrapers.acm_scraper import *
 from scrapers.pubmed_scraper import *
 from query_writer.query_writer import *
+#import logging
+#from color_logger import logger
 from datetime import datetime
 import configparser
 
 
 def main():
+    
+    # Set up logger from external file
+    #setup_logger()
+    
     # Create a ConfigParser object
     config = configparser.ConfigParser()
     # Read the ini file
