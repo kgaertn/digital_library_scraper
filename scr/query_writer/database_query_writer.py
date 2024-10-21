@@ -15,8 +15,8 @@ def main():
     # Read the ini file
     config.read('config/search_param_config.ini')
     # Retrieve parameters for the search and convert to the appropriate types
-    search_type = config.get('search', 'search_type')
-    database = config.get('search', 'database')
+    #search_type = config.get('search', 'search_type')
+    database = config.get('search', 'manual_database')
 
     # Load the default search terms from the XML config file
     current_path = Path(__file__).resolve().parent
@@ -24,9 +24,13 @@ def main():
     config_file_path = os.path.join(parent_path, 'config', 'search_query_config.xml')
 
     search_config = Config_File_Handler(config_file_path)
+    search_types = {}
+    for category in search_config.categories:
+        search_type = config.get('search', f'{category.lower()}_search_type')
+        search_types[f'{category.lower()}'] = search_type
 
     query_generator = DatabaseQuery(search_config.categories, search_config.databases)
-    query_generator.generate_query(database, search_type)
+    query_generator.generate_query(database, search_types)
 
     ieee_query = query_generator.query
     print(f'Resulting {database} Query: \n' + ieee_query)

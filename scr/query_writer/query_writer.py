@@ -3,41 +3,74 @@ class DatabaseQuery:
         self.search_terms = search_terms
         self.databases = databases
         self.selected_database = ''
-        self.selected_search_type = ''
+        self.selected_search_types = {}
         self.query = ""
 
-    def generate_query(self, database, search_type):
 
+    def generate_query(self, database, search_type_dict):
         # Convert input to lowercase for case-insensitive comparison
         database_to_check = database.lower()
-        search_type_to_ckeck = search_type.lower()
 
-        # Find the normalized database name (database name how it is saved in the xml file)
+        # Find the normalized database name (database name as saved in the xml file)
         self.selected_database = next((key for key in self.databases if key.lower() == database_to_check), None)
         
         if self.selected_database:
-            self.selected_search_type  = next((key for key in self.databases[self.selected_database]['syntax'] if key.lower() == search_type_to_ckeck), None)
-            if self.selected_search_type:
-                # create a query for each category of search terms
-                for category in self.search_terms:
-                    category_terms = self.search_terms[category]
-                    category_query = self._category_query(category_terms)
+            # Update selected_search_types based on the provided search_type_dict
+            for category, search_type in search_type_dict.items():
+                search_type_to_check = search_type.lower()
+                self.selected_search_types[category] = next(
+                    (key for key in self.databases[self.selected_database]['syntax'] if key.lower() == search_type_to_check), None
+                )
+                if self.selected_search_types[category] is None:
+                    raise ValueError(f"Search type '{search_type}' not found for category '{category}' in database '{database}'")
+
+            # Create a query for each category of search terms
+            for category in self.search_terms:
+                category_terms = self.search_terms[category]
+                if category in self.selected_search_types:
+                    category_query = self._category_query(category_terms, self.selected_search_types[category])
                     
                     # Use 'AND' for all except the last category
-                    if self.query != '' and (category != 'Exclusion'):
-                        self.query +=f" AND ({category_query})"
-                    elif (category == 'Exclusion'):
-                        self.query +=f" NOT ({category_query})"
+                    if self.query != '' and (category != 'exclusion_category'):
+                        self.query += f" AND ({category_query})"
+                    elif category == 'exclusion_category':
+                        self.query += f" NOT ({category_query})"
                     else:
-                        self.query +=f"({category_query})"
-            else: 
-                raise ValueError(f"Search type '{search_type}' not found in database '{database}'")
+                        self.query += f"({category_query})"
         else:
             raise ValueError(f"Database '{database}' not found")
+    #def generate_query(self, database, search_type):
+#
+    #    # Convert input to lowercase for case-insensitive comparison
+    #    database_to_check = database.lower()
+    #    search_type_to_check = search_type.lower()
+#
+    #    # Find the normalized database name (database name how it is saved in the xml file)
+    #    self.selected_database = next((key for key in self.databases if key.lower() == database_to_check), None)
+    #    
+    #    if self.selected_database:
+    #        self.selected_search_type  = next((key for key in self.databases[self.selected_database]['syntax'] if key.lower() == search_type_to_check), None)
+    #        if self.selected_search_type:
+    #            # create a query for each category of search terms
+    #            for category in self.search_terms:
+    #                category_terms = self.search_terms[category]
+    #                category_query = self._category_query(category_terms)
+    #                
+    #                # Use 'AND' for all except the last category
+    #                if self.query != '' and (category != 'exclusion_category'):
+    #                    self.query +=f" AND ({category_query})"
+    #                elif (category == 'exclusion_category'):
+    #                    self.query +=f" NOT ({category_query})"
+    #                else:
+    #                    self.query +=f"({category_query})"
+    #        else: 
+    #            raise ValueError(f"Search type '{search_type}' not found in database '{database}'")
+    #    else:
+    #        raise ValueError(f"Database '{database}' not found")
 
-    def _category_query(self, category):
-        search_syntaxes = self.databases[self.selected_database]['syntax'][self.selected_search_type]
-        syntax_before, syntax_after = self.split_syntax(search_syntaxes)
+    def _category_query(self, category, search_type):
+        search_syntaxes = self.databases[self.selected_database]['syntax'][search_type]
+        syntax_before, syntax_after = self.split_syntax(search_syntaxes, search_type)
         category_query = ""
         if (len(syntax_before) > 0) & (len(syntax_after) == 0):
             category_query = self._query_before(category, syntax_before)
@@ -48,8 +81,8 @@ class DatabaseQuery:
         
         return category_query         
         
-    def split_syntax(self, search_syntaxes):
-        term_position = self.databases[self.selected_database]['term_position'][self.selected_search_type]
+    def split_syntax(self, search_syntaxes, search_type):
+        term_position = self.databases[self.selected_database]['term_position'][search_type]
         index_before = []
         index_after = []
         syntax_after = []

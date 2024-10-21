@@ -42,7 +42,7 @@
     </Databases>
     
     <Categories>
-        <Category name="Movement">
+        <Category name="category_1">
             <SearchTerms>
                 <Term>Movement</Term>
                 <Term>Kinesiology</Term>
@@ -54,7 +54,7 @@
                 <Term>"Motor Control"</Term>
             </SearchTerms>
         </Category>
-        <Category name="Measurements">
+        <Category name="category_2">
             <SearchTerms>
                 <Term>"3D Movement Measurement*"</Term>
                 <Term>"3D Motion"</Term>
@@ -70,7 +70,7 @@
                 <Term>"GRF"</Term>
             </SearchTerms>
         </Category>
-        <Category name="Analysis Methods">
+        <Category name="category_3">
             <SearchTerms>
                 <Term>"Pattern recognition"</Term>
                 <Term>"Dimension* reduction"</Term>
@@ -80,9 +80,17 @@
                 <Term>Classifier</Term>
                 <Term>"Machine Learning"</Term>
                 <Term>"Deep Learning"</Term>
+                <Term>"Neural Network"</Term>
             </SearchTerms>
         </Category>
-        <Category name="Exclusion">
+        <Category name="category_4">
+            <SearchTerms>
+                <Term>human*</Term>
+                <Term>participant*</Term>
+                <Term>patient</Term>
+            </SearchTerms>
+        </Category>
+        <Category name="exclusion_category">
             <SearchTerms>
                 <Term>Gait</Term>
                 <Term>robot*</Term>

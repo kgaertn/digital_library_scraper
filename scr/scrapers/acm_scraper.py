@@ -103,7 +103,7 @@ class ACM_Scraper:
 
     def extract_citation(self, res):
         res_span = res.find('span', class_='citation')
-        return int(' '.join(res_span.stripped_strings)) if res_span != None else None
+        return ' '.join(res_span.stripped_strings) if res_span != None else None
 
     def extract_full_abstract(self, url):
         sleep_time = random.randint(1, 15)

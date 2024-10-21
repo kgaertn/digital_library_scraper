@@ -31,7 +31,8 @@ def main():
     max_year = None if max_year == 'None' else int(max_year)
     max_results = config.get('search', 'max_results')   
     max_results = None if max_results == 'None' else int(max_results)
-    search_type = config.get('search', 'search_type')
+    
+    #search_type = config.get('search', 'search_type')
     
     articles_complete = pd.DataFrame(columns=['source', 'title', 'authors', 'date',	'year',	'journal_book',	'doi', 'pmid', 'url', 'abstract', 'keywords', 'citation'])
     # Load the default search terms from the XML config file
@@ -40,6 +41,11 @@ def main():
     config_file_path = os.path.join(parent_path, 'config', 'search_query_config.xml')
     
     search_config = Config_File_Handler(config_file_path)
+    
+    search_types = {}
+    for category in search_config.categories:
+        search_type = config.get('search', f'{category.lower()}_search_type')
+        search_types[f'{category.lower()}'] = search_type
 
     ieee_data_path = parent_path / 'input'
     file_list = [f.name for f in ieee_data_path.iterdir() if '.csv' in f.name]
@@ -57,7 +63,7 @@ def main():
         # Generate the query based on the selected database
         if database != 'IEEE':
             query_generator = DatabaseQuery(search_config.categories, search_config.databases)
-            query_generator.generate_query(database, search_type)
+            query_generator.generate_query(database, search_types)
             if database == 'PubMed':
                 pubmed_query = query_generator.query
             elif database == 'ACM':
