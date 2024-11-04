@@ -8,6 +8,9 @@
             <Syntax name = "Title/Abstract">
                 <Term position = "After">[Title/Abstract]</Term>
             </Syntax>
+            <Syntax name = "Title/Abstract/Keyword">
+                <Term position = "After">[Title/Abstract]</Term>
+            </Syntax>
             <Syntax name = "FullText">
                 <Term position = "After">[All Fields]</Term>
             </Syntax>
@@ -19,6 +22,11 @@
             <Syntax name = "Title/Abstract">
                 <Term position = "Before">"Document Title":</Term>
                 <Term position = "Before">"Abstract":</Term>
+            </Syntax>
+            <Syntax name = "Title/Abstract/Keyword">
+                <Term position = "Before">"Document Title":</Term>
+                <Term position = "Before">"Abstract":</Term>
+                <Term position = "Before">"Author Keywords":</Term>
             </Syntax>
             <Syntax name = "FullText">
                 <Term position = "Before">"All Metadata":</Term>
@@ -33,6 +41,12 @@
                 <Term position = "Before">Title:( </Term>
                 <Term position = "Before">Abstract:(</Term>
                 <Term position = "After">) </Term>
+            </Syntax>
+            <Syntax name = "Title/Abstract/Keyword">
+            <Term position = "Before">Title:( </Term>
+            <Term position = "Before">Abstract:(</Term>
+            <Term position = "Before">Keywords:(</Term>
+            <Term position = "After">) </Term>
             </Syntax>
             <Syntax name = "FullText">
                 <Term position = "Before"> </Term>
@@ -56,13 +70,12 @@
         </Category>
         <Category name="category_2">
             <SearchTerms>
-                <Term>"3D Movement Measurement*"</Term>
+                <Term>"3D Movement Measurement"</Term>
                 <Term>"3D Motion"</Term>
                 <Term>"Motion capture"</Term>
                 <Term>EMG</Term>
                 <Term>Electromyography</Term>
                 <Term>"Wearable Sensors"</Term>
-                <Term>"Motion analysis"</Term>
                 <Term>"Multimodal"</Term>
                 <Term>IMU</Term>
                 <Term>"inertial measurement unit"</Term>
@@ -85,9 +98,12 @@
         </Category>
         <Category name="category_4">
             <SearchTerms>
-                <Term>human*</Term>
-                <Term>participant*</Term>
-                <Term>patient</Term>
+                <Term>musculoskeletal</Term>
+                <Term>healthy</Term>
+                <Term>muscular</Term>
+                <Term>skeletal</Term>
+                <Term>"muscle activity"</Term>
+                <Term>"joint angle"</Term>
             </SearchTerms>
         </Category>
         <Category name="exclusion_category">
