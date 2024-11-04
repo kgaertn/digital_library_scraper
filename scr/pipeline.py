@@ -1,24 +1,13 @@
-# Author: Kaya Gärtner
-# Date: 16.10.2024
-# Description: Script to scrape information (such as author, title, abstract) about publications 
-#               found for specific search queries from Pubmed and ACM, as well as loading a 
-#               pre-downloaded file from IEEE libary and combine them into one complete CSV file
-
 from pathlib import Path
 from file_handler.file_handler import *
 from scrapers.acm_scraper import *
 from scrapers.pubmed_scraper import *
 from query_writer.query_writer import *
-#import logging
-#from color_logger import logger
 from datetime import datetime
 import configparser
 
 
 def main():
-    
-    # Set up logger from external file
-    #setup_logger()
     
     # Create a ConfigParser object
     config = configparser.ConfigParser()
@@ -47,6 +36,7 @@ def main():
         search_type = config.get('search', f'{category.lower()}_search_type')
         search_types[f'{category.lower()}'] = search_type
 
+    # create a dataframe from the ieee file
     ieee_data_path = parent_path / 'input'
     file_list = [f.name for f in ieee_data_path.iterdir() if '.csv' in f.name]
 
@@ -57,6 +47,7 @@ def main():
         ieee_df = ieee_df.applymap(lambda x: x.replace('; ', ', ') if isinstance(x, str) else x)
         articles_complete = pd.concat([articles_complete, ieee_df], axis=0, ignore_index=True)
     
+    # generate queries for the other databases and fetch the articles 
     acm_query = None
     pubmed_query = None
     for database in search_config.databases:
@@ -102,6 +93,7 @@ def main():
     file_name = f'{formatted_timestamp}_complete_articles.csv'
     save_path = os.path.join(output_dir, file_name)
     
+    # save to csv file
     articles_complete.to_csv(save_path, index=True, sep=';', index_label='article_id')
 
     print(f'Saved articles to {file_name}')

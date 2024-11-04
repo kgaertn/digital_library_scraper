@@ -1,8 +1,21 @@
 # Digital Library Scraper
 
+## Description
+
 Scrapes information about publications found for specific search queries from Pubmed and ACM, loads a pre-downloaded file from IEEE libary and combines them into one complete CSV file
 
 Can scrape information such as title, authors, abstract, keywords, publication year to simplify larger literature research
+
+## Authors
+
+- Kaya Gärtner (kaya.gaertner@hs-osnabrueck.de)
+
+## Last updated
+
+2024-11-04
+
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Project installation:
 

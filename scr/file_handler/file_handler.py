@@ -1,5 +1,25 @@
+"""
+This module provides classes for handling XML configuration files and processing data files,
+particularly those from IEEE, with functionalities for managing search configurations, 
+categories, terms, and handling multiple file formats.
+
+Classes:
+    - Config_File_Handler: Manages XML configuration files by loading databases, categories, 
+      and search terms from a given configuration file, and allows for category and term management.
+    - File_Handler: Manages and processes various data file formats (CSV, TSV, XML, Excel) 
+      by loading data, and processing IEEE files specifically for extracting relevant article information.
+
+Dependencies:
+    - xml.etree.ElementTree as ET: Used for parsing XML configuration files.
+    - pandas as pd: Required for handling dataframes when processing CSV, TSV, XML, and Excel files.
+    
+Classes:
+    - Config_File_Handler
+    - File_Handler
+"""
+
+# TODO: split the two classes into two scripts; one for config file handling, the other for data file handling
 import xml.etree.ElementTree as ET
-import os
 import pandas as pd
 from lxml import etree
 
@@ -8,7 +28,9 @@ class Config_File_Handler():
     def __init__(self, config_file):
         self.config_file = config_file
         self.search_config = self.load_config()
+    
     def load_config(self):
+        
         tree = ET.parse(self.config_file)
         root = tree.getroot()
         

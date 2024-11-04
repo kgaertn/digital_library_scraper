@@ -1,3 +1,7 @@
+# Author: Kaya Gärtner
+# Date: 16.10.2024
+# Description: Generates the queries for specified databases, based on the database, and search term inputs
+
 class DatabaseQuery:
     def __init__(self, search_terms, databases):
         self.search_terms = search_terms
@@ -30,7 +34,7 @@ class DatabaseQuery:
                 if category in self.selected_search_types:
                     category_query = self._category_query(category_terms, self.selected_search_types[category])
                     
-                    # Use 'AND' for all except the last category
+                    # Use 'AND' for all except the exclusion category
                     if self.query != '' and (category != 'exclusion_category'):
                         self.query += f" AND ({category_query})"
                     elif category == 'exclusion_category':
@@ -39,36 +43,9 @@ class DatabaseQuery:
                         self.query += f"({category_query})"
         else:
             raise ValueError(f"Database '{database}' not found")
-    #def generate_query(self, database, search_type):
-#
-    #    # Convert input to lowercase for case-insensitive comparison
-    #    database_to_check = database.lower()
-    #    search_type_to_check = search_type.lower()
-#
-    #    # Find the normalized database name (database name how it is saved in the xml file)
-    #    self.selected_database = next((key for key in self.databases if key.lower() == database_to_check), None)
-    #    
-    #    if self.selected_database:
-    #        self.selected_search_type  = next((key for key in self.databases[self.selected_database]['syntax'] if key.lower() == search_type_to_check), None)
-    #        if self.selected_search_type:
-    #            # create a query for each category of search terms
-    #            for category in self.search_terms:
-    #                category_terms = self.search_terms[category]
-    #                category_query = self._category_query(category_terms)
-    #                
-    #                # Use 'AND' for all except the last category
-    #                if self.query != '' and (category != 'exclusion_category'):
-    #                    self.query +=f" AND ({category_query})"
-    #                elif (category == 'exclusion_category'):
-    #                    self.query +=f" NOT ({category_query})"
-    #                else:
-    #                    self.query +=f"({category_query})"
-    #        else: 
-    #            raise ValueError(f"Search type '{search_type}' not found in database '{database}'")
-    #    else:
-    #        raise ValueError(f"Database '{database}' not found")
 
     def _category_query(self, category, search_type):
+        # create the query for the category, based on the position of syntaxes
         search_syntaxes = self.databases[self.selected_database]['syntax'][search_type]
         syntax_before, syntax_after = self.split_syntax(search_syntaxes, search_type)
         category_query = ""
@@ -82,6 +59,7 @@ class DatabaseQuery:
         return category_query         
         
     def split_syntax(self, search_syntaxes, search_type):
+        # split the syntax into the elements that need to be placed before or after the search term
         term_position = self.databases[self.selected_database]['term_position'][search_type]
         index_before = []
         index_after = []
@@ -105,6 +83,7 @@ class DatabaseQuery:
         return syntax_before, syntax_after
             
     def _query_before(self, category, syntax_before):
+        # create the query for a category, when all elements of the syntax need to be before the search term
         category_query = ''
         for i, syntax in enumerate(syntax_before):
             formatted_terms = [f'{syntax}{term}' for term in category]
@@ -116,6 +95,7 @@ class DatabaseQuery:
         return category_query
     
     def _query_after(self, category, syntax_after):   
+        # create the query for a category, when all elements of the syntax need to be after the search term
         category_query = ''
         for i, syntax in enumerate(syntax_after):
             formatted_terms = [f'{term}{syntax}' for term in category]
@@ -127,6 +107,8 @@ class DatabaseQuery:
         return category_query
         
     def _query_both(self, category, syntax_before, syntax_after):   
+        # create the query for a category, when elements of the syntax need to be placed before and after the search term
+        # only works for one element after (e.g. if a braket needs to be closed after the search term)
         category_query = ''
         for i, syntax in enumerate(syntax_before):
             formatted_terms = [f'{syntax}{term}{syntax_after[0]}' for term in category]

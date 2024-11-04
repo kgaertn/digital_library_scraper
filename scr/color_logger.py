@@ -1,4 +1,3 @@
-# color_logger.py
 import logging
 from colorama import Fore, init
 
