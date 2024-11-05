@@ -11,7 +11,7 @@ Functions:
 Dependencies:
     - random: For generating random numbers for article randomization.
     - configparser: For reading configuration settings.
-    - pathlib.Path: For file path handling.
+    - pathlib.Path and os: For file path handling.
     - pandas (pd): For DataFrame operations and file handling.
     - file_handler: Custom module containing the File_Handler class for loading and processing files.
 
@@ -24,6 +24,7 @@ from file_handler.file_handler import *
 from pathlib import Path
 import random
 import configparser
+import os
 
 def get_randomization_list(nr_randomizations: int, min_value: int, max_value: int) -> list[int]:
     """
@@ -81,12 +82,17 @@ def mark_duplicates(df: pd.DataFrame)-> pd.DataFrame:
 
 
 def main():
-    
-    # Create a ConfigParser object
+    """
+    Main function for processing data files based on configuration.
+
+    This function reads parameters from 'config/search_param_config.ini', 
+    loads CSV files from the output directory, applies randomization 
+    and marks duplicates as specified, and saves the modified data back 
+    to the original files.
+    """
+
     config = configparser.ConfigParser()
-    # Read the ini file
     config.read('config/search_param_config.ini')
-    # Retrieve parameters for the search and convert to the appropriate types
     screening = config.get('pilot', 'screening') 
 
     

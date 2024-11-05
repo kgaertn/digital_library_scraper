@@ -3,19 +3,9 @@ This module provides classes for handling XML configuration files and processing
 particularly those from IEEE, with functionalities for managing search configurations, 
 categories, terms, and handling multiple file formats.
 
-Classes:
-    - Config_File_Handler: Manages XML configuration files by loading databases, categories, 
-      and search terms from a given configuration file, and allows for category and term management.
-    - File_Handler: Manages and processes various data file formats (CSV, TSV, XML, Excel) 
-      by loading data, and processing IEEE files specifically for extracting relevant article information.
-
 Dependencies:
     - xml.etree.ElementTree as ET: Used for parsing XML configuration files.
     - pandas as pd: Required for handling dataframes when processing CSV, TSV, XML, and Excel files.
-    
-Classes:
-    - Config_File_Handler
-    - File_Handler
 """
 
 # TODO: split the two classes into two scripts; one for config file handling, the other for data file handling
@@ -25,15 +15,47 @@ from lxml import etree
 
 # class to handle the config xml file
 class Config_File_Handler():
-    def __init__(self, config_file):
+    """
+    Class for managing XML configuration files.
+
+    This class handles loading databases, categories, and search terms from a given 
+    configuration file. It also provides methods for managing categories and search terms.
+    
+    Attributes:
+        config_file (str): Path to the XML configuration file.
+        databases (dict): A dictionary to store databases with their respective syntax terms and positions.
+        categories (dict): A dictionary to store categories and their search terms.
+    """
+    def __init__(self, config_file: str):
+        """
+        Initialize the ConfigLoader with a configuration file path.
+
+        Args:
+            config_file (str): Path to the XML configuration file to load.
+        """
         self.config_file = config_file
+        self.databases = {}
+        self.categories = {}
         self.search_config = self.load_config()
     
     def load_config(self):
+        """
+        Parse the XML configuration file to populate `databases` and `categories`.
+
+        This function reads XML data from `config_file` and organizes it into:
+            - `databases`: Contains syntax terms and term positions for each database.
+            - `categories`: Contains search terms for each category.
+
+        Returns:
+            None
+
+        Raises:
+            FileNotFoundError: If the configuration file does not exist.
+            ET.ParseError: If the XML file is improperly formatted.
+        """
         
         tree = ET.parse(self.config_file)
         root = tree.getroot()
-        
         self.databases = {}
         for database in root.find('Databases'):
             database_name = database.get('name')
@@ -51,20 +73,37 @@ class Config_File_Handler():
                 'syntax': database_syntax,
                 'term_position': term_positions
             }
-
         self.categories = {}
         for category in root.find('Categories'):
             category_name = category.get('name')
             search_terms = [term.text for term in category.find('SearchTerms')]
             self.categories[category_name] = search_terms
-            
+
+    #region ADDITIONAL FUNCTIONALITY
+    """
+    Additional utility functions for future use or potential adjustments. 
+
+    Note:
+        These functions are currently not used in the main scraping logic but are provided 
+        for extensibility and may be incorporated into future versions or customized workflows.
+    """
+         
     def display_categories(self):
-        """Prints the current categories and their search terms."""
+        """
+        Prints the current categories and their search terms.
+        
+        Returns:
+            None
+        """
         for category, terms in self.categories.items():
             print(f"{category}: {', '.join(terms)}")
 
     def add_category(self, category):
-        """Add a new category to the search"""
+        """
+        Add a new category to the search
+        
+        
+        """
         if category.lower() in [item.lower() for item in self.categories]:
             print(f"Category {category} already exists")
         else:
@@ -74,7 +113,6 @@ class Config_File_Handler():
             exclusion_category = self.categories.pop('Exclusion')
             self.categories['Exclusion'] = exclusion_category
             print(f"Category '{category}' was added.")
-    
     def remove_category(self, category):
         """Remove a new category to the search"""
         categories_lower = [item.lower() for item in self.categories]
@@ -86,7 +124,6 @@ class Config_File_Handler():
             print(f"Category '{category}' was removed.")
         else:
             print(f"Category {category} not found.")
-    
     def add_term(self, category, term):
         """Add a search term to a specific category."""
         
@@ -123,7 +160,6 @@ class Config_File_Handler():
                 print(f"There are no terms to remove in category {category}.")
         else:
             print(f"Category '{category}' not found.")
-    
     def display_category_names(self):
         """Prints the current category names and their search terms."""
         categories = []
@@ -137,10 +173,22 @@ class Config_File_Handler():
         for category in self.categories:
             categories.append(category)
         return categories
+    #endregion ADDITIONAL FUNCTIONALITY
 
-# class to handle data files, e.g. csv, used for processing the ieee downloaded files
 class File_Handler:
-    def __init__(self, file_path, sep = ','):
+    """
+    Class for managing and processing various data file formats.
+
+    This class handles loading data from different file formats (CSV, TSV, XML, Excel) 
+    and processes IEEE files specifically to extract relevant article information.
+
+    Attributes:
+        file_path (str): The path to the file that should be loaded.
+        data (pd.DataFrame): The raw data loaded from the file.
+        processed_data (pd.DataFrame): The processed data after extraction and cleaning.
+        sep (str): The separator used for CSV files (default is a comma).
+    """
+    def __init__(self, file_path: str, sep: str = ','):
         """
         Initialize the FileHandler for a filepath.
 
@@ -152,13 +200,7 @@ class File_Handler:
         self.processed_data = None
         self.sep = sep
         self.load_file()
-
-    def parse_data(self, data_str):
-        """convert comma-separated string to list of floats"""
-        if data_str:
-            return [float(x) for x in data_str.split(',')]
-        return []
-    
+   
     def load_file(self):
         """Identify file format and call respective loader method"""
         if str(self.file_path).endswith('.csv'):
@@ -173,29 +215,41 @@ class File_Handler:
         elif str(self.file_path).endswith('.xlsx'):
             self.data = self._load_excel()
         # Add more formats as needed
-        #return self.data
+        
+    #region FILE LOADING
+    """
+    Functions for loading various file formats.
 
-    def _load_csv_comma(self):
-        """Load CSV file logic"""
+    Note:
+        Some of these functions are placeholders and have not been tested yet.
+    """
+    def _load_csv_comma(self) -> pd.DataFrame:
+        """Load a CSV file that uses commas as delimiters."""
         return pd.read_csv(self.file_path, delimiter=',')
     
-    def _load_csv_semic(self):
-        """Load CSV file logic"""
+    def _load_csv_semic(self) -> pd.DataFrame:
+        """Load a CSV file that uses semicolons as delimiters."""
         return pd.read_csv(self.file_path, delimiter=';')
-    
-    def _load_tsv(self):
-        """Load TSV file logic"""
+            
+    def _load_tsv(self) -> pd.DataFrame:
+        """Placeholder: Load a TSV (tab-separated values) file"""
         return pd.read_csv(self.file_path, delimiter='\t')
-
+    
     def _load_xml(self):
-        """Load XML file logic"""
-
-    def _load_excel(self):
-        """Load Excel file logic"""
+        """Placeholder: Load XML file logic"""
+        
+    def _load_excel(self) -> pd.DataFrame:
+        """Placeholder: Load Excel file logic"""
         return pd.read_excel(self.file_path)
+    #endregion FILE LOADING
     
     def process_ieee_file(self):
-        """Process the file"""
+        """
+        Process the IEEE file, selecting relevant columns and renaming them.
+
+        Returns:
+            None
+        """
         self.processed_data = self.data.drop(columns=['Author Affiliations', 'Date Added To Xplore','Volume', 'Issue',
             'Start Page', 'End Page', 'Volume', 'Issue','Start Page', 'End Page', 'ISSN', 'ISBNs', 'Funding Information', 'IEEE Terms',
             'Mesh_Terms', 'Patent Citation Count',
@@ -216,14 +270,24 @@ class File_Handler:
         self.processed_data['source'] = 'IEEE'
 
     
-    def get_ieee_articles(self):
-        #self.load_file()
+    #region GETTER
+    """
+    Functions for retrieving data.
+
+    Note:
+        These functions provide access to processed and raw data for further analysis or manipulation.
+    """
+    def get_ieee_articles(self) -> pd.DataFrame:
+        """Retrieve IEEE articles after processing the data."""
         self.process_ieee_file()
-        return self.processed_data
+        return pd.DataFrame(self.processed_data)
     
-    def get_processed_data(self):
+    def get_processed_data(self) -> pd.DataFrame:
+        """Return the processed data as a DataFrame."""
         return pd.DataFrame(self.processed_data)
 
-    def get_raw_data(self):
+    def get_raw_data(self) -> pd.DataFrame:
+        """Return the raw data as a DataFrame."""
         return pd.DataFrame(self.data)
+    #endregion
 

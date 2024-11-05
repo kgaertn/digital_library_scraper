@@ -42,7 +42,18 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '.
 from scr.color_logger import logger
 
 class Pubmed_Scraper:
-    def __init__(self, query='machine learning', max_results = None):
+    def __init__(self, query:str='machine learning', max_results:int|None = None):
+        """
+        Initializes the Pubmed_Scraper with a search query and optional maximum results.
+
+        Args:
+            query (str): The search term to query the PubMed database (default is 'machine learning').
+            max_results (int, optional): The maximum number of results to retrieve (default is None).
+
+        Notes:
+            - The class initializes URLs for searching and fetching articles from the PubMed API.
+            - An auto-incrementing ID is set to keep track of articles.
+        """
         self.query = query
         self.auto_id = 1
         self.articles = []
@@ -310,17 +321,34 @@ class Pubmed_Scraper:
                 self.articles.append(item)
                 self.auto_id += 1
         
-    # Functions to extract specific information from an article.
-    # Each function takes an XML Element representing an article
-    # and returns the requested piece of information.
+    #region EXTRACTION FUNCTIONS
+    """
+        The functions below extract the detailed information from the search result.
+
+        Args:
+            res (Element): The XML element representing an article.
+            url (str): The specific articles url
+
+        Returns:
+            str|int: The detail as string, or int (e.g. in case of year) or None if not found.
+        """
     def extract_pmid(self, res:ET.Element) -> str | None:
+        """
+        Extracts the PubMed ID (PMID) from the given article element.
+        """
         return res.find('.//PMID').text if res.find('.//PMID') is not None else None
         
     def extract_title(self, res:ET.Element) -> str | None:
+        """
+        Extracts the title from the given article element.
+        """
         title = res.find('.//ArticleTitle').text if res.find('.//ArticleTitle') is not None else None
         return title
     
     def extract_authors(self, res:ET.Element) -> str | None:
+        """
+        Extracts the authors from the given article element.
+        """
         res_list = [
                 f"{author.find('.//ForeName').text} {author.find('.//LastName').text}" 
                 for author in res.findall('.//Author')
@@ -329,6 +357,9 @@ class Pubmed_Scraper:
         return ', '.join(res_list) if res_list != None else None
     
     def extract_date(self, res:ET.Element) -> str | None:
+        """
+        Extracts the date from the given article element.
+        """
         publication_date = res.find('.//PubDate')
         if publication_date is not None:
             month = publication_date.find('.//Month').text if publication_date.find('.//Month') is not None else None
@@ -340,9 +371,15 @@ class Pubmed_Scraper:
         return date, year
 
     def extract_type(self, res:ET.Element) -> str | None:
+        """
+        Extracts the publication type from the given article element.
+        """
         return res.find('.//PublicationType').text
         
     def extract_keywords(self, res:ET.Element) -> str | None:
+        """
+        Extracts the keywords from the given article element.
+        """
         res_list = [
                 res_part.findall('.//Keyword')   
                 for res_part in res.findall('.//KeywordList')
@@ -352,35 +389,42 @@ class Pubmed_Scraper:
         return ', '.join(keywords) if keywords != None else None
 
     def extract_journal(self, res:ET.Element) -> str | None:
+        """
+        Extracts the journal name from the given article element.
+        """
         journal = res.find('.//Journal/Title').text if res.find('.//Journal/Title') is not None else None
         return journal
 
     def extract_doi(self, res:ET.Element) -> str | None:
+        """
+        Extracts the doi from the given article element.
+        """
         return res.find('.//ArticleId[@IdType="doi"]').text if res.find('.//ArticleId[@IdType="doi"]') is not None else None
     
     def extract_url(self, res:ET.Element) -> str | None:
+        """
+        Extracts the url from the given article element.
+        """
         href = res.find('.//ArticleId[@IdType="pubmed"]').text if res.find('.//ArticleId[@IdType="pubmed"]') is not None else None
         return f"https://pubmed.ncbi.nlm.nih.gov/{href}/" 
 
     def extract_full_abstract(self, article:ET.Element) -> str | None:
+        """
+        Extracts the abstract from the given article element.
+        """
         abstract_list = []
-                # Iterate over each abstract part
         for abstract_part in article.findall('.//Abstract'):
-            # Use the .iter() method to get all elements in the correct order
             for elem in abstract_part.iter():
-                # If the element is of interest (AbstractText, sup, or i), extract its text
                 if elem.tag in ['AbstractText', 'sup', 'i', 'strong.sub-title']:
                     if 'Label' in elem.attrib:
-                        # Format the label in title case and append it
                         label = elem.attrib['Label'].title()
                         abstract_list.append(f"{label}: ")
-                    text = elem.text or ''  # Get the text, handling cases where text might be None
+                    text = elem.text or ''
                     abstract_list.append(text)
-                # Also, append any tail text (text after the closing tag)
                 if elem.tail:
                     abstract_list.append(elem.tail)
-        # Join the parts into a full abstract string
         return ''.join(abstract_list)
+    #endregion EXTRACTION FUNCTIONS
     
     def scrape_articles(self, max_results = None):
         self.max_results = max_results
@@ -388,6 +432,12 @@ class Pubmed_Scraper:
         return pd.DataFrame(self.articles)
 
 def main():
+    """
+    Main function to execute the Pubmed_Scraper alone and retrieve articles based on a specific query.
+
+    This function initializes the Pubmed_Scraper with a predefined complex query, scrapes 
+    articles from the Pubmed Library, and stores the results in a DataFrame.
+    """
     query = """(Movement[Title/Abstract] OR Kinesiology[Title/Abstract] OR Physiotherapy[Title/Abstract] OR "Physical Therapy"[Title/Abstract] 
             OR Kinetic[Title/Abstract] OR Kinematic[Title/Abstract] OR Biomechanic[Title/Abstract] OR "Motor Control"[Title/Abstract]) 
             AND ("3D Movement Measurement*"[Title/Abstract] OR "3D Motion"[Title/Abstract] OR "Motion capture"[Title/Abstract] OR EMG[Title/Abstract] 

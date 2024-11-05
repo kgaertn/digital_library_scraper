@@ -1,8 +1,21 @@
-# Author: Kaya Gärtner
-# Date: 16.10.2024
-# Description: Create and a single query for the configured search terms and a specified database
-#              can be used to create the query for ieee search
- 
+"""
+This script generates database queries based on configuration settings 
+defined in an INI file and search terms from an XML configuration file.
+
+It serves as the entry point for executing the query generation process, 
+loading necessary configurations, and printing the resulting database query.
+
+Dependencies:
+    - configparser: For reading INI configuration files.
+    - os: For file path manipulations.
+    - sys: For modifying the system path.
+    - pathlib: For handling file system paths in an object-oriented way.
+    - query_writer: For generating queries.
+    - file_handler: For handling file-related operations.
+
+Usage:
+    Execute this script as a standalone program to generate queries.
+"""
 from query_writer import *
 import sys
 import os
@@ -14,8 +27,14 @@ from scr.file_handler.file_handler import *
 
 
 def main():
+    """
+    Entry point for generating database queries based on configuration.
+
+    This function reads search parameters from an INI file, loads search 
+    terms from an XML configuration file, and generates a query for the 
+    specified database, printing the resulting query.
+    """
     config = configparser.ConfigParser()
-    # Read the ini file
     config.read('config/search_param_config.ini')
     database = config.get('search', 'manual_database')
 

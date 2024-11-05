@@ -1,3 +1,32 @@
+"""
+Article Scraper and Aggregator
+
+This script is designed to scrape academic articles from various databases based 
+on user-defined search parameters specified in a configuration file. The main 
+functionality includes reading search criteria from an INI file, generating 
+search queries for different databases (IEEE, PubMed, ACM), and aggregating 
+the resulting articles into a single DataFrame. The final output is saved as a 
+CSV file in the output directory.
+
+Dependencies:
+- pandas: for handling data in DataFrame format
+- configparser: for reading configuration files
+- pathlib: for handling file paths in a cross-platform manner
+- datetime: for timestamping output files
+- Custom modules:
+  - file_handler.file_handler: Contains functions for reading and processing files.
+  - scrapers.acm_scraper: Provides functionality to scrape articles from the ACM database.
+  - scrapers.pubmed_scraper: Provides functionality to scrape articles from the PubMed database.
+  - query_writer.query_writer: Manages the generation of search queries.
+
+Usage:
+1. Ensure that the required configuration files ('search_param_config.ini' and 
+   'search_query_config.xml') are correctly set up.
+2. Run the script. The aggregated articles will be saved in the 'output' 
+   directory with a timestamped filename.
+
+"""
+
 from pathlib import Path
 from file_handler.file_handler import *
 from scrapers.acm_scraper import *
@@ -6,9 +35,24 @@ from query_writer.query_writer import *
 from datetime import datetime
 import configparser
 
-
+# TODO: split the main function into smaller chunks to enhance readability
 def main():
-    
+    """
+    Main function to orchestrate the scraping and saving of academic articles 
+    based on specified search parameters in a configuration file.
+
+    This function reads search parameters from an INI configuration file, 
+    retrieves articles from various databases (IEEE, PubMed, ACM), 
+    concatenates the results into a single DataFrame, filters articles 
+    based on year parameters, and saves the complete articles to a CSV file.
+
+    The process involves:
+        - Reading configuration settings from 'config/search_param_config.ini'
+        - Loading search terms from 'config/search_query_config.xml'
+        - Scraping articles from specified databases
+        - Filtering the articles by publication year
+        - Saving the results to a CSV file in the output directory
+    """
     # Create a ConfigParser object
     config = configparser.ConfigParser()
     # Read the ini file
