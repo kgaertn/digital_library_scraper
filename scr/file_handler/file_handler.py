@@ -37,6 +37,7 @@ class Config_File_Handler():
         self.databases = {}
         self.categories = {}
         self.search_config = self.load_config()
+        
     
     def load_config(self):
         """
@@ -188,17 +189,20 @@ class File_Handler:
         processed_data (pd.DataFrame): The processed data after extraction and cleaning.
         sep (str): The separator used for CSV files (default is a comma).
     """
-    def __init__(self, file_path: str, sep: str = ','):
+    def __init__(self, file_path: str, sep: str = ',', excel_sheet_Name: str|None = None):
         """
         Initialize the FileHandler for a filepath.
 
-        Parameters:
-        - file_path: The path to the file that should be loaded.
+        Args:
+            file_path (str): The path to the file that should be loaded.
+            sep (str): the file seperator for the file to load (defaults to ',')
+            excel_sheet_Name (str, Optional): the name of the excel sheet that should be loaded (defaults to None)
         """
         self.file_path = file_path
         self.data = None
         self.processed_data = None
         self.sep = sep
+        self.excel_sheet_name = excel_sheet_Name
         self.load_file()
    
     def load_file(self):
@@ -239,8 +243,11 @@ class File_Handler:
         """Placeholder: Load XML file logic"""
         
     def _load_excel(self) -> pd.DataFrame:
-        """Placeholder: Load Excel file logic"""
-        return pd.read_excel(self.file_path)
+        """Load Excel file logic"""
+        if self.excel_sheet_name == None:
+            return pd.read_excel(self.file_path)
+        else:
+            return pd.read_excel(self.file_path, sheet_name=self.excel_sheet_name)
     #endregion FILE LOADING
     
     def process_ieee_file(self):

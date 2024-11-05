@@ -88,7 +88,7 @@ def main():
         filepath = os.path.join(ieee_data_path, file)
         ieee_file_handler = File_Handler(filepath, sep=',')
         ieee_df = ieee_file_handler.get_ieee_articles()
-        ieee_df = ieee_df.applymap(lambda x: x.replace('; ', ', ') if isinstance(x, str) else x)
+        ieee_df = ieee_df.map(lambda x: x.replace('; ', ', ') if isinstance(x, str) else x)
         articles_complete = pd.concat([articles_complete, ieee_df], axis=0, ignore_index=True)
     
     # generate queries for the other databases and fetch the articles 
@@ -104,11 +104,11 @@ def main():
             elif database == 'ACM':
                 acm_query = query_generator.query
     
-    pubmed_crawler = Pubmed_Scraper(pubmed_query)
-    articles_complete = pd.concat([articles_complete, pubmed_crawler.scrape_articles(max_results = max_results) ], axis=0, ignore_index=True) 
-    
-    acm_crawler = ACM_Scraper(acm_query)
-    articles_complete = pd.concat([articles_complete, acm_crawler.scrape_articles(max_results = max_results) ], axis=0, ignore_index=True)
+    #pubmed_crawler = Pubmed_Scraper(pubmed_query)
+    #articles_complete = pd.concat([articles_complete, pubmed_crawler.scrape_articles(max_results = max_results) ], axis=0, ignore_index=True) 
+    #
+    #acm_crawler = ACM_Scraper(acm_query)
+    #articles_complete = pd.concat([articles_complete, acm_crawler.scrape_articles(max_results = max_results) ], axis=0, ignore_index=True)
         
     # select only articles within the timespan
     if min_year != None or max_year != None :
