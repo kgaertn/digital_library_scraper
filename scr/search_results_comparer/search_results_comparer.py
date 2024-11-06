@@ -17,6 +17,9 @@ Functions:
     - compare_searches: Compares new and old results, marking new entries with 'Add' and removed entries with 'Remove'.
     - create_file_path: Finds and returns the path of a file in a directory based on a condition (e.g., file extension).
     - main: Main workflow function to execute the entire script.
+Note:
+    Results are compared based on the title. With some titles, if they contain special characters, this does not work perfectly. 
+    Compare the marked publications manually, or use the post_processing script to find duplicates.
 """
 
 from datetime import datetime
