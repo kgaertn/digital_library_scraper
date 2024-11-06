@@ -67,4 +67,8 @@ This project is licensed under the MIT License - see the LICENSE file for detail
     - will add a column for the pilot screening that marks a randomized sample of the predefined size, if screening is not set to None (config file)
     - will mark duplicates based on the doi (NOTE: all duplicates will be marked, and so will publications without a doi, results need to be manually checked!)
     NOTE: will read all files in the output folder and perform the postprocessing steps
+6. run the scr/search_results_comparer/search_results_comparer.py to compare results from two seperate searches
+    - will load the results from the two specified search files
+    - will mark additional or removed results from the latest search and store the combined dataset in a new file in the output folder
+    NOTE: the older and new file need to be specified in the script
 
