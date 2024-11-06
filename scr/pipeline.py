@@ -36,6 +36,24 @@ from datetime import datetime
 import configparser
 
 # TODO: split the main function into smaller chunks to enhance readability
+def select_within_timespan(config: str, data: pd.DataFrame) -> pd.DataFrame:
+    min_year = config.get('search', 'start_year')   
+    min_year = None if min_year == 'None' else int(min_year)
+    max_year = config.get('search', 'end_year')   
+    max_year = None if max_year == 'None' else int(max_year)
+    
+    # select only articles within the timespan
+    if min_year != None or max_year != None :
+        if max_year == None:
+            data = data[(data['year'] >= min_year) | (data['year'].isna())]
+        elif min_year == None:
+            data = data[(data['year'] <= max_year) | (data['year'].isna())]
+        else:
+            data = data[((data['year'] >= min_year) & (data['year'] <= max_year)) | 
+                                                  (data['year'].isna())]
+    
+    return data
+    
 def main():
     """
     Main function to orchestrate the scraping and saving of academic articles 
@@ -58,10 +76,10 @@ def main():
     # Read the ini file
     config.read('config/search_param_config.ini')
     # Retrieve parameters for the search and convert to the appropriate types
-    min_year = config.get('search', 'start_year')   
-    min_year = None if min_year == 'None' else int(min_year)
-    max_year = config.get('search', 'end_year')   
-    max_year = None if max_year == 'None' else int(max_year)
+    #min_year = config.get('search', 'start_year')   
+    #min_year = None if min_year == 'None' else int(min_year)
+    #max_year = config.get('search', 'end_year')   
+    #max_year = None if max_year == 'None' else int(max_year)
     max_results = config.get('search', 'max_results')   
     max_results = None if max_results == 'None' else int(max_results)
     
@@ -107,19 +125,20 @@ def main():
     pubmed_crawler = Pubmed_Scraper(pubmed_query)
     articles_complete = pd.concat([articles_complete, pubmed_crawler.scrape_articles(max_results = max_results) ], axis=0, ignore_index=True) 
     
-    acm_crawler = ACM_Scraper(acm_query)
-    articles_complete = pd.concat([articles_complete, acm_crawler.scrape_articles(max_results = max_results) ], axis=0, ignore_index=True)
+    #acm_crawler = ACM_Scraper(acm_query)
+    #articles_complete = pd.concat([articles_complete, acm_crawler.scrape_articles(max_results = max_results) ], axis=0, ignore_index=True)
         
     # select only articles within the timespan
-    if min_year != None or max_year != None :
-        if max_year == None:
-            articles_complete = articles_complete[(articles_complete['year'] >= min_year) | (articles_complete['year'].isna())]
-        elif min_year == None:
-            articles_complete = articles_complete[(articles_complete['year'] <= max_year) | (articles_complete['year'].isna())]
-        else:
-            articles_complete = articles_complete[((articles_complete['year'] >= min_year) & (articles_complete['year'] <= max_year)) | 
-                                                  (articles_complete['year'].isna())]
+    #if min_year != None or max_year != None :
+    #    if max_year == None:
+    #        articles_complete = articles_complete[(articles_complete['year'] >= min_year) | (articles_complete['year'].isna())]
+    #    elif min_year == None:
+    #        articles_complete = articles_complete[(articles_complete['year'] <= max_year) | (articles_complete['year'].isna())]
+    #    else:
+    #        articles_complete = articles_complete[((articles_complete['year'] >= min_year) & (articles_complete['year'] <= max_year)) | 
+    #                                              (articles_complete['year'].isna())]
     
+    articles_complete = select_within_timespan(config, articles_complete)
     # Reset the index
     articles_complete.reset_index(drop=True, inplace=True)
     
