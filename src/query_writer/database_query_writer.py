@@ -23,7 +23,7 @@ from pathlib import Path
 import configparser
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-from scr.file_handler.file_handler import *  
+from src.file_handler.file_handler import *  
 
 
 def main():

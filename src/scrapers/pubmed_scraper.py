@@ -39,7 +39,7 @@ import re
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-from scr.color_logger import logger
+from src.color_logger import logger
 
 class Pubmed_Scraper:
     def __init__(self, query:str='machine learning', max_results:int|None = None):

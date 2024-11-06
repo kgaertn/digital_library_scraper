@@ -27,7 +27,7 @@ from pathlib import Path
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-from scr.file_handler.file_handler import *
+from src.file_handler.file_handler import *
 
 def load_results(file_path: str, sep: str = ';', excel_sheet_name: str|None = None) -> pd.DataFrame:
     """
