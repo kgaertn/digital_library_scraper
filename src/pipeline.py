@@ -165,6 +165,8 @@ def main():
         - Filtering the articles by publication year
         - Saving the results to a CSV file in the output directory
     """
+    databases_to_search = ["PubMed"]
+    #databases_to_search = ["PubMed", "IEEE", "ACM"]
     # Read the ini config file
     config = configparser.ConfigParser()
     config.read('config/search_param_config.ini')
@@ -182,16 +184,19 @@ def main():
     max_results = config.get('search', 'max_results')   
     max_results = None if max_results == 'None' else int(max_results)
     
-    articles_complete = add_ieee_data(parent_path, articles_complete)
+    if "IEEE" in databases_to_search:
+        articles_complete = add_ieee_data(parent_path, articles_complete)
     
     # generate queries for the other databases and fetch the articles 
     pubmed_query, acm_query = generate_queries(search_config, search_types)
-        
-    pubmed_crawler = Pubmed_Scraper(pubmed_query)
-    articles_complete = pd.concat([articles_complete, pubmed_crawler.scrape_articles(max_results = max_results) ], axis=0, ignore_index=True) 
     
-    acm_crawler = ACM_Scraper(acm_query)
-    articles_complete = pd.concat([articles_complete, acm_crawler.scrape_articles(max_results = max_results) ], axis=0, ignore_index=True)
+    if "PubMed" in databases_to_search:    
+        pubmed_crawler = Pubmed_Scraper(pubmed_query)
+        articles_complete = pd.concat([articles_complete, pubmed_crawler.scrape_articles(max_results = max_results) ], axis=0, ignore_index=True) 
+    
+    if "ACM" in databases_to_search:
+        acm_crawler = ACM_Scraper(acm_query)
+        articles_complete = pd.concat([articles_complete, acm_crawler.scrape_articles(max_results = max_results) ], axis=0, ignore_index=True)
           
     articles_complete = select_within_timespan(config, articles_complete)
     articles_complete.reset_index(drop=True, inplace=True)

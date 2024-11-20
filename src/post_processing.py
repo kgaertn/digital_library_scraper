@@ -17,7 +17,7 @@ Dependencies:
 
 Usage:
     This script can be run directly. It reads search configuration settings, performs randomization and duplicate marking on articles,
-    and saves updated files back to the specified directory.
+    and saves updated files back to the output directory.
 """
 
 from file_handler.file_handler import *

@@ -17,19 +17,19 @@
         </Database>
         <Database name = "IEEE">
             <Syntax name = "Title">
-                <Term position = "Before">"Document Title":</Term>
+                <Term position = "Before">"Document Title": </Term>
             </Syntax>        
             <Syntax name = "Title/Abstract">
-                <Term position = "Before">"Document Title":</Term>
-                <Term position = "Before">"Abstract":</Term>
+                <Term position = "Before">"Document Title": </Term>
+                <Term position = "Before">"Abstract": </Term>
             </Syntax>
             <Syntax name = "Title/Abstract/Keyword">
-                <Term position = "Before">"Document Title":</Term>
-                <Term position = "Before">"Abstract":</Term>
-                <Term position = "Before">"Author Keywords":</Term>
+                <Term position = "Before">"Document Title": </Term>
+                <Term position = "Before">"Abstract": </Term>
+                <Term position = "Before">"Author Keywords": </Term>
             </Syntax>
             <Syntax name = "FullText">
-                <Term position = "Before">"All Metadata":</Term>
+                <Term position = "Before">"All Metadata": </Term>
             </Syntax>
         </Database>
         <Database name = "ACM" position = "Both">
@@ -75,6 +75,7 @@
                 <Term>"Motion capture"</Term>
                 <Term>EMG</Term>
                 <Term>Electromyography</Term>
+                <Term>Electromyographic</Term>
                 <Term>"Wearable Sensors"</Term>
                 <Term>"Multimodal"</Term>
                 <Term>IMU</Term>
@@ -96,7 +97,17 @@
                 <Term>"Neural Network"</Term>
             </SearchTerms>
         </Category>
-        <Category name="category_4">
+       <!--<Category name="category_4">
+            <SearchTerms>
+                <Term>implement*</Term>
+                <Term>application</Term>
+                <Term>testing</Term>
+                <Term>validation</Term>
+                <Term>evaluat*</Term>
+                <Term>validity</Term>
+            </SearchTerms>
+        </Category>-->
+        <!--<Category name="category_4">
             <SearchTerms>
                 <Term>musculoskeletal</Term>
                 <Term>healthy</Term>
@@ -105,10 +116,10 @@
                 <Term>"muscle activity"</Term>
                 <Term>"joint angle"</Term>
             </SearchTerms>
-        </Category>
+        </Category>-->
         <Category name="exclusion_category">
             <SearchTerms>
-                <Term>Gait</Term>
+                <!--<Term>gait</Term>-->
                 <Term>robot*</Term>
                 <Term>prosthe*</Term>
             </SearchTerms>
